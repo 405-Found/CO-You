@@ -13,6 +13,8 @@ import TextField from '@mui/material/TextField';
 import Pause from '@mui/icons-material/Pause';
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import FlightIcon from '@mui/icons-material/Flight';
+import DoneIcon from '@mui/icons-material/Done';
+import StopIcon from '@mui/icons-material/Stop';
 const activityRecord = () => (
     <Box className="app-frame" style={{backgroundColor: "#4caf50" }}>
     <Header />
@@ -42,6 +44,20 @@ const activityRecord = () => (
             </Box>
             
             <Stack spacing={1} >
+            
+            <Box className="card-green-solid activity-display-box">
+                <Grid container spacing={2} className="activity-display-box-item">
+                    <Grid item xs={1}>
+                        <EnergySavingsLeafIcon />
+                    </Grid>
+                    <Grid item xs={7}>
+                        Total Carbon emission
+                    </Grid>
+                    <Grid item xs={2} style={{textAlign: 'right'}}>
+                        100kg
+                    </Grid>
+                </Grid>
+            </Box>
             <Box className="card-primary activity-display-box">
                 <Grid container spacing={2} className="activity-display-box-item">
                     <Grid item xs={1}>
@@ -58,13 +74,13 @@ const activityRecord = () => (
             <Box className="card-primary activity-display-box">
                 <Grid container spacing={2} className="activity-display-box-item">
                     <Grid item xs={1}>
-                        <EnergySavingsLeafIcon />
+                        <FlightIcon />
                     </Grid>
                     <Grid item xs={7}>
-                        Total Carbon emission
+                        Carbon balance
                     </Grid>
                     <Grid item xs={2} style={{textAlign: 'right'}}>
-                        100kg
+                        10%
                     </Grid>
                 </Grid>
             </Box>

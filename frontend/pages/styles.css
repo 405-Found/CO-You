@@ -20,7 +20,41 @@
 
     box-shadow: none !important;
 }
+.card-red{
+    background-color: #ffebee;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:10px;
+    padding-bottom:5px;
 
+    border-radius: 15px;
+
+    box-shadow: none !important;
+}
+.card-green-solid{
+    background-color: rgb(90, 194, 98);
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:10px;
+    padding-bottom:5px;
+
+    border-radius: 15px;
+
+    box-shadow: none !important;
+}
+.card-red-solid{
+    background-color: #e53935;
+    color:rgb(255,255,255,0.95);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:10px;
+    padding-bottom:5px;
+
+    border-radius: 15px;
+
+    box-shadow: none !important;
+}
 /* Buttons */
 .btn-primary{
     background-color: rgb(90, 194, 98);
