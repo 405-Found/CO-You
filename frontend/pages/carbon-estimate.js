@@ -1,10 +1,23 @@
 import { Container, Typography, Icon, Button } from '@mui/material'
 import { Box } from '@mui/system'
+import { useRouter } from 'next/router'
 import Header from '../components/Header'
 
 const CarbonEstimate = () => {
+  const router = useRouter()
+
   const N_TREES = 10
   const AMT_CARBON = 13.8
+
+  const onContinue = () => {
+    router.push({
+      pathname: '/set-goal',
+      query: {
+        'Top Line': AMT_CARBON,
+      },
+    })
+  }
+
   return (
     <>
       <Header showBackButton />
@@ -24,7 +37,7 @@ const CarbonEstimate = () => {
           </Box>
         </Typography>
         <Typography variant="subtitle">
-          That's the equivalent of {N_TREES} trees every year
+          That's the equivalent cutting down {N_TREES} trees every year
         </Typography>
         <Box
           sx={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', mt: 2 }}
@@ -33,7 +46,12 @@ const CarbonEstimate = () => {
             <Icon key={i}>park</Icon>
           ))}
         </Box>
-        <Button variant="contained" fullWidth sx={{ mt: 2 }}>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ mt: 2 }}
+          onClick={onContinue}
+        >
           Continue
         </Button>
       </Container>
