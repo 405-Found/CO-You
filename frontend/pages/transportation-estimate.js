@@ -1,23 +1,12 @@
 import { useState } from 'react'
-import {
-  Button,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Button, ListItemText, TextField, Typography } from '@mui/material'
 import Container from '@mui/material/Container'
 import Header from '../components/Header'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import { Box } from '@mui/system'
-
-const transportationTypes = [
-  'Diesel Car',
-  'Electric Vehicle',
-  'Motorcycle',
-  'Truck',
-]
+import { useRouter } from 'next/router'
+import transportationTypes from '../lib/transportation-types'
 
 const TransportationType = ({ typeName, onChange, value }) => (
   <ListItem>
@@ -39,6 +28,7 @@ const TransportationType = ({ typeName, onChange, value }) => (
 )
 
 const TransportationEstimate = () => {
+  const router = useRouter()
   const [hourData, setHourData] = useState(
     transportationTypes.reduce((a, v) => ({ ...a, [v]: '0' }), {})
   )
@@ -52,7 +42,7 @@ const TransportationEstimate = () => {
   }
 
   const submitHourData = () => {
-    console.log(hourData)
+    router.push({ pathname: '/carbon-estimate', query: hourData })
   }
 
   return (
@@ -72,7 +62,12 @@ const TransportationEstimate = () => {
             />
           ))}
         </List>
-        <Button variant="contained" fullWidth onClick={submitHourData}>
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={submitHourData}
+          sx={{ mt: 2 }}
+        >
           Continue
         </Button>
       </Container>
