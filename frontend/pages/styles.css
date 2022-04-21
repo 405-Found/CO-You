@@ -1,0 +1,67 @@
+/* Cards */
+.card-primary{
+    background-color: rgb(236, 247, 236);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:10px;
+    padding-bottom:5px;
+
+    border-radius: 15px;
+    box-shadow: none !important;
+}
+.card-yellow{
+    background-color: rgb(254, 251, 235);;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:10px;
+    padding-bottom:5px;
+
+    border-radius: 15px;
+
+    box-shadow: none !important;
+}
+
+/* Buttons */
+.btn-primary{
+    background-color: rgb(90, 194, 98);
+    color:white;
+}
+.btn-yellow{
+    background-color: rgb(243, 198, 65);
+    color:white;
+}
+.btn-red{
+
+}
+/* Forms */
+.app-input{
+    min-width:100%
+}
+/* App frame */
+.app-container{
+    background-color: white !important;
+    margin-top:10vh;
+    max-width:600px;
+    min-height: 500px;
+    padding-top: 50px;
+    padding-left: 50px;
+
+    padding-right: 50px;
+    border-radius: 30px;
+
+}
+.app-frame{
+    background-color: #F8F8F8 !important;
+    height: 100vh;
+}
+
+/* Typography */
+.page-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(80, 43, 3)
+}
+
+/* Page-content */
+
+
