@@ -4,9 +4,10 @@ import Header from '../components/Header'
 
 const CarbonEstimate = () => {
   const N_TREES = 10
+  const AMT_CARBON = 13.8
   return (
     <>
-      <Header />
+      <Header showBackButton />
       <Container>
         <Typography variant="h4" sx={{ marginY: 2 }}>
           Estimated daily emissions
@@ -16,7 +17,7 @@ const CarbonEstimate = () => {
             as="span"
             sx={{ fontSize: 80, fontFamily: 'monospace', marginRight: 2 }}
           >
-            13.8
+            {AMT_CARBON}
           </Box>
           <Box as="span" sx={{ fontSize: 20 }}>
             kg CO<sup>2</sup> per day
