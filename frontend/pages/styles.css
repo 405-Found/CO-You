@@ -43,20 +43,36 @@
 }
 /* App frame */
 .app-container{
-    background-color: white !important;
-    margin-top:10vh;
-    max-width:600px;
-    min-height: 500px;
+    background-color: white ;
     padding-top: 50px;
     padding-left: 50px;
 
     padding-right: 50px;
     border-radius: 30px;
+    min-height: 500px;
 
 }
 .app-frame{
-    background-color: #F8F8F8 !important;
     height: 100vh;
+}
+
+/* On PC */
+@media screen and (min-width: 800px) {
+    .app-frame{
+        background-color: #F8F8F8 ;
+    }
+    .app-container{
+        background-color: white ;
+        margin-top:10vh;
+        max-width:400px;
+        min-height: 500px;
+        padding-top: 50px;
+        padding-left: 50px;
+    
+        padding-right: 50px;
+        border-radius: 30px;
+    
+    }
 }
 
 /* Typography */
@@ -68,4 +84,72 @@
 
 /* Page-content */
 
+/* Activity-record*/
+.activity-time{
+    font-size: 60px;
+    font-weight: bold;
+    color:white;
+    margin-top: 50px;
+}
+.activity-unit{
 
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(37, 119, 47,0.5)
+}
+
+
+
+    .activity-action-back{
+        position: absolute;
+        width: 100%;
+        background-color:white;
+        left: 0;
+        right: 0;
+        
+        bottom: 0;
+        height:50vh; 
+
+        border-radius: 30px 30px 0px 0px;
+        padding-top: 65px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+/* On PC */
+@media screen and (min-width: 800px) {
+    .activity-action-back{
+        max-width: 60%;
+        left:20%
+    }
+}
+.activity-pause-button{
+    
+    width: 80px;
+    height: 80px;
+    background: #fffafa;
+    font-size: 50px;
+    color: #f9322c;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    text-decoration: none;
+    transition: 0.2s;
+    position: absolute;
+    top: -30px;
+    left: 50%; 
+    transform: translate(-50%,0);
+    box-shadow:none !important;
+    border:7px solid;
+
+    
+}
+.activity-display-box{
+    height:60px;
+}
+.activity-display-box-item{
+    position: absolute;
+    margin-top:-7px;
+    margin-left: -5px;
+    max-width: 90%;
+}

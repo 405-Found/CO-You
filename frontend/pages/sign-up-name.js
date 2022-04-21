@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 const signUpName = () => (
-    <Box className="app-frame" sx={{}}>
+    <Box className="app-frame" sx={{backgroundColour:"#4caf50"}}>
     <Header />
     <Container className="app-container">
       <Box className="app-box">
