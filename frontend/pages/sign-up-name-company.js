@@ -8,14 +8,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-const signUp = () => (
+const signUpNameCompany = () => (
     <Box className="app-frame" sx={{}}>
     <Header />
     <Container className="app-container">
       <Box className="app-box">
       <Stack spacing={2}>
         <Typography variant="h4" className="page-title" color="text.secondary" gutterBottom>
-        What is your name?
+        What is the name of yoru organisation?
                 </Typography>
         <Card sx={{ minWidth: 275 }} className="card-primary">
             <CardContent>
@@ -23,7 +23,7 @@ const signUp = () => (
                 <TextField
                         hiddenLabel
                         id="filled-hidden-label-normal"
-                        placeholder='Please enter your fullname'
+                        placeholder='Please enter the name'
                         className="app-input"
                         variant="filled"
                         />
@@ -39,4 +39,4 @@ const signUp = () => (
     </Box>
 );
 
-export default signUp;
+export default signUpNameCompany;
