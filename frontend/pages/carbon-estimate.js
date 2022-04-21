@@ -13,7 +13,7 @@ const CarbonEstimate = () => {
     router.push({
       pathname: '/set-goal',
       query: {
-        'Top Line': AMT_CARBON,
+        topline: AMT_CARBON,
       },
     })
   }

@@ -10,9 +10,15 @@ import {
 import Header from '../components/Header'
 import { DEFAULT_GOAL_PCT } from '../lib/constants'
 import { Box } from '@mui/system'
+import { useRouter } from 'next/router'
 
 const SetGoal = ({ topLine }) => {
+  const router = useRouter()
   const [goalPct, setGoalPct] = useState(DEFAULT_GOAL_PCT)
+
+  const onClick = () => {
+    router.push('/')
+  }
 
   return (
     <>
@@ -57,6 +63,7 @@ const SetGoal = ({ topLine }) => {
           fullWidth
           sx={{ mt: 2 }}
           className="btn-primary"
+          onClick={onClick}
         >
           Sounds good!
         </Button>
@@ -70,7 +77,7 @@ export async function getServerSideProps(context) {
   console.log(context.query)
   return {
     props: {
-      topLine: context.query['Top Line'],
+      topLine: context.query?.topline || '  ',
     },
   }
 }
