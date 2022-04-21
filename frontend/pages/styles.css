@@ -33,6 +33,10 @@
 .btn-red{
 
 }
+
+.btn-primary:hover{
+    
+}
 /* Forms */
 .app-input{
     min-width:100%
