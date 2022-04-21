@@ -6,36 +6,50 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import BackButton from './BackButton'
 
-export default function Header({ showBackButton }) {
+export default function Header({ showBackButton, isFixed, isTransparent }) {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{ backgroundColor: '#F8F8F8' }}
-        variant="outlined"
-        elevation={0}
-      >
-        <Toolbar>
-          {showBackButton ? <BackButton /> : null}
-          <Typography variant="h4" color="blue">
-            CarbonIO
-          </Typography>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
+    <AppBar
+      position={isFixed ? 'fixed' : 'static'}
+      {...(!isTransparent && { sx: { backgroundColor: '#F8F8F8' } })}
+      variant="outlined"
+      elevation={0}
+      color="transparent"
+    >
+      <Toolbar>
+        {showBackButton ? <BackButton /> : null}
+        <Typography
+          variant="h4"
+          sx={{ ...(isTransparent && { color: '#FFF' }) }}
+        >
+          CarbonIO
+        </Typography>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Button
+            color="primary"
+            sx={{ ...(isTransparent && { color: '#FFF' }) }}
           >
-            <Button color="primary">Login</Button>
-            <Button color="primary">Logout</Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+            Login
+          </Button>
+          <Button
+            color="primary"
+            sx={{ ...(isTransparent && { color: '#FFF' }) }}
+          >
+            Logout
+          </Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
   )
 }
 
 Header.defaultProps = {
   showBackButton: false,
+  isFixed: false,
+  isTransparent: false,
 }

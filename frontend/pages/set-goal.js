@@ -55,7 +55,7 @@ const SetGoal = ({ topLine }) => {
           <Box as="span" sx={{ fontFamily: 'monospace', fontSize: 40, mx: 1 }}>
             {(topLine * (goalPct / 100)).toFixed(2)}
           </Box>
-          carbon credits additional every day, where 1 carbon credit is
+          additional carbon credits every day, where 1 carbon credit is
           equivalent to 1 kg of CO<sup>2</sup>.
         </Typography>
         <Button
