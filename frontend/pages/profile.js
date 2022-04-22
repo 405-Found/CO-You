@@ -2,9 +2,11 @@ import {
   AppBar,
   Avatar,
   Badge,
+  Button,
   Container,
   Icon,
   IconButton,
+  Paper,
   Toolbar,
   Typography,
 } from '@mui/material'
@@ -16,12 +18,7 @@ import { Box } from '@mui/system'
 import Wave from 'react-wavify'
 import { PieChart } from 'react-minimal-pie-chart'
 import stc from 'string-to-color'
-
-const CHART_DATA = [
-  { title: 'Flight', value: 10, color: 'rgba(255,0,0,0.5)' },
-  { title: 'Car', value: 15, color: 'rgba(0,255,0,0.5)' },
-  { title: 'Motorbike', value: 20, color: 'rgba(0,0,255,0.5)' },
-]
+import typeToColor from '../lib/typeToColor'
 
 const Profile = ({ user }) => {
   const router = useRouter()
@@ -32,14 +29,15 @@ const Profile = ({ user }) => {
     console.log(pieData)
   }, [])
 
-  const pieData = Object.entries(user.currentStatus.shares)
+  const pieData = Object.entries(user?.currentStatus.shares || [])
     .map((data) => ({
       title: data[0],
       value: data[1].amount,
-      color: stc(data[0]),
+      color: typeToColor(data[0]),
       pct: data[1].percentage,
     }))
     .filter(({ pct }) => pct > 0.01)
+  const totalCo2 = pieData.reduce((acc, { value }) => acc + value, 0)
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -106,9 +104,21 @@ const Profile = ({ user }) => {
               sx={{ width: 100, height: 100, zIndex: 9000 }}
             />
           </Badge>
-          <Typography variant="h3" fontWeight={500} sx={{ my: 2 }}>
+          <Typography variant="h3" fontWeight={500} sx={{ my: 2, mb: 4 }}>
             {user?.email}
           </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<Icon>person_add</Icon>}
+            sx={{
+              textTransform: 'none',
+              fontWeight: 500,
+              fontSize: 18,
+            }}
+          >
+            Send Friend Request
+          </Button>
         </Container>
       </Box>
       <Box flex={1} display="flex" flexDirection="column">
@@ -123,7 +133,7 @@ const Profile = ({ user }) => {
           }}
           style={{ marginBottom: -20 }}
         />
-        <Box flex={1} bgcolor="#81c784">
+        <Box flex={1} bgcolor="#81c784" pb={8}>
           <Container
             sx={{
               display: 'grid',
@@ -146,25 +156,58 @@ const Profile = ({ user }) => {
                 {parseFloat(user?.carbonCredit, 2).toFixed(2)}
               </Typography>
             </Box>
-            <Box sx={{ maxWidth: 500, maxHeight: 500 }}>
-              <PieChart
-                data={pieData}
-                lineWidth={60}
-                segmentsStyle={{ transition: 'stroke .3s' }}
-                animate
-                label={({ dataIndex, dataEntry }) =>
-                  `${pieData[dataIndex].title} ${Math.round(
-                    dataEntry.percentage
-                  )}%`
-                }
-                labelPosition={70}
-                labelStyle={{
-                  fontSize: '5px',
-                  fill: '#fff',
-                  pointerEvents: 'none',
-                }}
-              />
-            </Box>
+            <Paper
+              sx={{
+                maxWidth: 500,
+                padding: 4,
+                borderRadius: 4,
+              }}
+              elevation={1}
+            >
+              <Typography variant="h6" sx={{ fontSize: 24 }}>
+                Carbon Footprint Snapshot
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.64)' }}
+              >
+                Overall emissions by transportation category.
+              </Typography>
+              <Box sx={{ position: 'relative', mt: 4 }}>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%,-50%)',
+                  }}
+                  align="center"
+                  fontFamily="monospace"
+                >
+                  {totalCo2} kg
+                  <br />
+                  CO<sup>2</sup>
+                </Typography>
+                <PieChart
+                  data={pieData}
+                  lineWidth={40}
+                  segmentsStyle={{ transition: 'stroke .3s' }}
+                  animate
+                  label={({ dataIndex, dataEntry }) =>
+                    `${pieData[dataIndex].title} ${Math.round(
+                      dataEntry.percentage
+                    )}%`
+                  }
+                  labelPosition={80}
+                  labelStyle={{
+                    fontSize: '4px',
+                    fill: '#fff',
+                    pointerEvents: 'none',
+                  }}
+                />
+              </Box>
+            </Paper>
           </Container>
         </Box>
       </Box>

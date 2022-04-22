@@ -1,5 +1,6 @@
 export const DEFAULT_GOAL_PCT = 70
 export const AUTH_TOKEN_KEY = 'auth'
+export const VEHICLE_TYPES = ['Flight', 'Car', 'Motorbike', 'Bus', 'Rail']
 export const CHARITIES = [
   {
     name: 'Global Portfolio',

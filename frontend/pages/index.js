@@ -13,25 +13,30 @@ import {
   MenuItem,
   FormHelperText,
   Divider,
+  Dialog,
+  DialogTitle,
+  ListItem,
 } from '@mui/material'
 import cookie from 'cookie-cutter'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
 import axios from 'axios'
+import { useState } from 'react'
 import Header from '../components/Header'
-import { AUTH_TOKEN_KEY, CHARITIES } from '../lib/constants'
+import { AUTH_TOKEN_KEY, CHARITIES, VEHICLE_TYPES } from '../lib/constants'
+import typeToIcon from '../lib/typeToIcon'
 
 const TODAYS_ACTIVITIES = [
   {
-    type: 'CAR',
+    type: 'Car',
     subtype: 'diesel',
     distance: 50,
     time: '14:02 to 16:01',
     credits: -1,
   },
   {
-    type: 'PLANE',
+    type: 'Flight',
     distance: 1000,
     time: '07:03 to 09:04',
     credits: -10,
@@ -41,13 +46,39 @@ const TODAYS_ACTIVITIES = [
 ]
 
 const TYPE_TO_VERB = {
-  CAR: 'Drive',
-  PLANE: 'Fly',
+  Car: 'Drive',
+  Flight: 'Fly',
+}
+
+const VehicleTypeDialog = ({ router, open, setOpen }) => {
+  return (
+    <Dialog onClose={() => setOpen(false)} open={open}>
+      <DialogTitle>Select a vehicle type</DialogTitle>
+      <List>
+        {VEHICLE_TYPES.map((type) => (
+          <ListItem
+            button
+            key={type}
+            onClick={() =>
+              router.push({
+                pathname: '/user/activity-record',
+                query: { type },
+              })
+            }
+          >
+            <ListItemText primary={type} />
+          </ListItem>
+        ))}
+      </List>
+    </Dialog>
+  )
 }
 
 const Index = ({ user }) => {
   const router = useRouter()
   if (!user) router.push('/sign-up-role-select')
+
+  const [open, setOpen] = useState(false)
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -112,18 +143,7 @@ const Index = ({ user }) => {
             ({ type, distance, time, credits, subtype, from, to }, i) => (
               <ListItemButton key={`Activity${i}`}>
                 <ListItemIcon>
-                  <Icon>
-                    {(() => {
-                      switch (type) {
-                        case 'CAR':
-                          return 'directions_car'
-                        case 'PLANE':
-                          return 'flight'
-                        default:
-                          return ''
-                      }
-                    })()}
-                  </Icon>
+                  <Icon>{typeToIcon(type)}</Icon>
                 </ListItemIcon>
                 <ListItemText
                   primary={`${TYPE_TO_VERB[type]} ${distance}km ${
@@ -146,7 +166,8 @@ const Index = ({ user }) => {
               </ListItemButton>
             )
           )}
-          <ListItemButton onClick={() => router.push('/user/activity-record')}>
+          <VehicleTypeDialog router={router} open={open} setOpen={setOpen} />
+          <ListItemButton onClick={() => setOpen(true)}>
             <ListItemIcon>
               <Icon>add</Icon>
             </ListItemIcon>
