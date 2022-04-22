@@ -3,17 +3,17 @@ import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Header from '../components/Header'
 
-const CarbonEstimate = () => {
+const CarbonEstimate = ({ estimate }) => {
   const router = useRouter()
 
+  //
   const N_TREES = 10
-  const AMT_CARBON = 13.8
 
   const onContinue = () => {
     router.push({
       pathname: '/set-goal',
       query: {
-        topline: AMT_CARBON,
+        topline: estimate,
       },
     })
   }
@@ -30,7 +30,7 @@ const CarbonEstimate = () => {
             as="span"
             sx={{ fontSize: 80, fontFamily: 'monospace', marginRight: 2 }}
           >
-            {AMT_CARBON}
+            {estimate}
           </Box>
           <Box as="span" sx={{ fontSize: 20 }}>
             kg CO<sup>2</sup> per day
@@ -60,9 +60,10 @@ const CarbonEstimate = () => {
 }
 
 export async function getServerSideProps(context) {
-  console.log(context.query)
   return {
-    props: {},
+    props: {
+      estimate: context.query?.estimate || 0,
+    },
   }
 }
 

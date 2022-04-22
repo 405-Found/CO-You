@@ -126,6 +126,11 @@
 .app-input{
     min-width:100%
 }
+/* Tables */
+.table-head{
+    font-size:12px;
+}
+.MuiTableCell-root{border-bottom: none}
 /* App frame */
 .app-container{
     background-color: white ;

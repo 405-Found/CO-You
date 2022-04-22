@@ -29,7 +29,7 @@ const Profile = ({ user }) => {
     console.log(pieData)
   }, [])
 
-  const pieData = Object.entries(user?.currentStatus.shares || [])
+  const pieData = Object.entries(user?.currentStatus?.shares || [])
     .map((data) => ({
       title: data[0],
       value: data[1].amount,
@@ -37,7 +37,7 @@ const Profile = ({ user }) => {
       pct: data[1].percentage,
     }))
     .filter(({ pct }) => pct > 0.01)
-  const totalCo2 = pieData.reduce((acc, { value }) => acc + value, 0)
+  const totalCo2 = pieData.reduce((acc, { value }) => acc + value, 0).toFixed(0)
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -46,6 +46,7 @@ const Profile = ({ user }) => {
         variant="outlined"
         elevation={0}
         position="fixed"
+        sx={{ border: 0 }}
       >
         <Toolbar>
           <Container>
@@ -117,7 +118,7 @@ const Profile = ({ user }) => {
               fontSize: 18,
             }}
           >
-            Send Friend Request
+            Add Friend
           </Button>
         </Container>
       </Box>
@@ -175,7 +176,7 @@ const Profile = ({ user }) => {
               </Typography>
               <Box sx={{ position: 'relative', mt: 4 }}>
                 <Typography
-                  variant="h3"
+                  fontSize={[40, 50]}
                   sx={{
                     position: 'absolute',
                     top: '50%',

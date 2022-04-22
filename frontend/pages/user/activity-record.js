@@ -22,8 +22,12 @@ import axios from 'axios'
 import typeToIcon from '../../lib/typeToicon'
 import typeToEmissionLevel from '../../lib/typeToEmissionLevel'
 import typeToSpeed from '../../lib/typeToSpeed'
+import { getToken } from '../../lib/useAuth'
+import { useRouter } from 'next/router'
 
 const activityRecord = ({ type }) => {
+  const router = useRouter()
+  const [startTime] = useState(new Date())
   const [secs, setSecs] = useState(0)
   let invl = null
   useEffect(() => {
@@ -41,15 +45,21 @@ const activityRecord = ({ type }) => {
   const secsToCo2 = (s) => s * 0.5
 
   const onEnd = async () => {
+    const duration = (secs / 3600).toFixed(2)
+    const distance = (typeToSpeed(type) * duration).toFixed(2)
     // TODO:
-    await axios.post('/api/user/addActivity', {
+    const res = await axios.post(`/api/user/addActivity?token=${getToken()}`, {
       description: '...',
       activityItem: {
         type: type,
-        distance: typeToSpeed(type),
-        // "duration":
+        distance,
+        duration,
+        start: startTime.toISOString(),
+        end: new Date().toISOString(),
       },
     })
+    console.log(res.data)
+    router.push('/')
   }
 
   return (

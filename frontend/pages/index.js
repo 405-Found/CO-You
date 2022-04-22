@@ -17,7 +17,7 @@ import {
   DialogTitle,
   ListItem,
 } from '@mui/material'
-import cookie from 'cookie-cutter'
+import moment from 'moment'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
@@ -27,27 +27,12 @@ import Header from '../components/Header'
 import { AUTH_TOKEN_KEY, CHARITIES, VEHICLE_TYPES } from '../lib/constants'
 import typeToIcon from '../lib/typeToIcon'
 
-const TODAYS_ACTIVITIES = [
-  {
-    type: 'Car',
-    subtype: 'diesel',
-    distance: 50,
-    time: '14:02 to 16:01',
-    credits: -1,
-  },
-  {
-    type: 'Flight',
-    distance: 1000,
-    time: '07:03 to 09:04',
-    credits: -10,
-    from: 'MEL',
-    to: 'LAX',
-  },
-]
-
 const TYPE_TO_VERB = {
-  Car: 'Drive',
   Flight: 'Fly',
+  Car: 'Drive',
+  Motorbike: 'Ride',
+  Bus: 'Ride',
+  Rail: 'Take a train',
 }
 
 const VehicleTypeDialog = ({ router, open, setOpen }) => {
@@ -74,7 +59,7 @@ const VehicleTypeDialog = ({ router, open, setOpen }) => {
   )
 }
 
-const Index = ({ user }) => {
+const Index = ({ user, activities }) => {
   const router = useRouter()
   if (!user) router.push('/sign-up-role-select')
 
@@ -82,7 +67,7 @@ const Index = ({ user }) => {
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header isFixed isTransparent />
+      <Header isFixed isTransparent user={user} />
       <Box
         sx={{
           display: 'grid',
@@ -112,7 +97,7 @@ const Index = ({ user }) => {
                 lineHeight: 1,
               }}
             >
-              {parseFloat(user.carbonCredit).toFixed(2)}
+              {parseFloat(user.currentStatus?.curCarbonEmission).toFixed(2)}
             </Typography>
             <Typography
               color="#FFF"
@@ -139,8 +124,22 @@ const Index = ({ user }) => {
       <Container>
         <Typography variant="overline">Today's activities</Typography>
         <List>
-          {TODAYS_ACTIVITIES.map(
-            ({ type, distance, time, credits, subtype, from, to }, i) => (
+          {activities?.map(
+            (
+              {
+                activityItem: {
+                  type,
+                  subtype,
+                  start,
+                  end,
+                  departurePos,
+                  arrivalPos,
+                  distance,
+                  carbonAmount,
+                },
+              },
+              i
+            ) => (
               <ListItemButton key={`Activity${i}`}>
                 <ListItemIcon>
                   <Icon>{typeToIcon(type)}</Icon>
@@ -149,8 +148,10 @@ const Index = ({ user }) => {
                   primary={`${TYPE_TO_VERB[type]} ${distance}km ${
                     subtype ? `on ${subtype}` : ''
                   }`}
-                  secondary={`${time} ${from ? `from ${from}` : ''} ${
-                    to ? `to ${to}` : ''
+                  secondary={`${start ? moment(start).format('HH:mma') : ''} ${
+                    end ? ` - ${moment(end).format('HH:mma')}` : ''
+                  } ${departurePos ? `from ${departurePos}` : ''} ${
+                    arrivalPos ? `to ${arrivalPos}` : ''
                   }`}
                   secondaryTypographyProps={{ fontSize: 14 }}
                 />
@@ -161,7 +162,7 @@ const Index = ({ user }) => {
                   fontSize={15}
                   textAlign="end"
                 >
-                  {`${credits.toFixed(2)} pts`}
+                  -{`${carbonAmount.toFixed(2)} pts`}
                 </Typography>
               </ListItemButton>
             )
@@ -227,15 +228,21 @@ export async function getServerSideProps(context) {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/userToken?token=${token}`
     )
+    const res2 = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/currentActivities?token=${token}`
+    )
+    console.log(res2.data)
     return {
       props: {
         user: res.data || null,
+        activities: res2.data || [],
       },
     }
   }
   return {
     props: {
       user: null,
+      activities: [],
     },
   }
 }

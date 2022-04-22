@@ -6,6 +6,7 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 import transportationTypes from '../lib/transportation-types'
 import useAuth from '../lib/useAuth'
 
@@ -44,8 +45,18 @@ const TransportationEstimate = () => {
     }
   }
 
-  const submitHourData = () => {
-    router.push({ pathname: '/carbon-estimate', query: hourData })
+  const submitHourData = async () => {
+    const postdata = []
+    for (const [typeName, value] of Object.entries(hourData)) {
+      postdata.push({ type: typeName, duration: value })
+    }
+    const res = await axios.post('/api/user/setDailyPlan', postdata, {
+      withCredentials: false,
+    })
+    router.push({
+      pathname: '/carbon-estimate',
+      query: { estimate: res.data },
+    })
   }
 
   return (

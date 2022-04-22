@@ -22,7 +22,7 @@ import {
   CardContent,
   Stack,
 } from '@mui/material'
-
+import React from 'react'
 import Input from '@mui/material/Input'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
@@ -33,11 +33,15 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
+import Menu from '@mui/material/Menu'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
 import Header from '../../components/Header'
 import { CHARITIES } from '../../lib/constants'
+
 import AddIcon from '@mui/icons-material/Add'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
@@ -71,7 +75,7 @@ const TYPE_TO_VERB = {
   PLANE: 'Fly',
 }
 
-const BuyCredit = () => {
+const Leaderboard = () => {
   const router = useRouter()
   return (
     <>
@@ -138,31 +142,54 @@ const BuyCredit = () => {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={7}>
-              <List
+            <Grid item xs={8}>
+              <TableContainer
                 style={{
-                  maxHeight: '300px',
+                  maxHeight: '350px',
                   overflowY: 'scroll',
                   scrollBehaviour: 'smooth',
                 }}
               >
-                <PurchaseHistoryItem place="1" credit="23" name="Kevin" />
-                <PurchaseHistoryItem />
-                <PurchaseHistoryItem />
-                <PurchaseHistoryItem />
-                <PurchaseHistoryItem />
-                <PurchaseHistoryItem />
-              </List>
+                <Table sx={{}} aria-label="simple table">
+                  <TableHead>
+                    <TableRow key="1" sx={{ borderBottom: 0 }}>
+                      <TableCell className="table-head">Rank</TableCell>
+                      <TableCell className="table-head">Name</TableCell>
+                      <TableCell align="right" className="table-head">
+                        <Box
+                          style={{
+                            textAlign: 'right',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          Emission save
+                        </Box>
+                      </TableCell>
+                      <TableCell align="right" className="table-head">
+                        Action
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <FriendItem rank="1" name="Kevin" emission="300" />
+                    <FriendItem rank="1" name="Riley" emission="500" />
+                    <FriendItem rank="1" name="Kevin" emission="300" />
+                    <FriendItem rank="1" name="Kevin" emission="300" />
+                    <FriendItem rank="1" name="Kevin" emission="300" />
+                    <FriendItem rank="1" name="Kevin" emission="-30" />
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Grid>
             <Grid item xs={1}>
               <Button
                 variant="contained"
-                startIcon={<ArrowDownwardOutlinedIcon />}
+                startIcon={<AddIcon />}
                 size="large"
                 className="btn btn-primary"
                 sx={{ minWidth: '200px', textAlign: 'center' }}
               >
-                My profile
+                Add friend
               </Button>
             </Grid>
           </Grid>
@@ -172,69 +199,83 @@ const BuyCredit = () => {
   )
 }
 
-const PurchaseHistoryItem = (props) => {
+const FriendItem = (props) => {
+  const options = ['Profile', 'Donate credit', 'Ask for donation']
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
   return (
-    <ListItem
-      secondaryAction={
-        <>
-          <Box
-            edge="end"
-            xs={{
-              color: '#00c853',
-            }}
-          >
-            {props.credit} g
-          </Box>
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="span"
-          >
-            <MoreVertOutlinedIcon />
-          </IconButton>
-        </>
-      }
-      sx={{ width: '350px' }}
-    >
-      <ListItemAvatar>
-        <Avatar>#{props.place}</Avatar>
-      </ListItemAvatar>
-      <ListItemText primary={props.name} />
-    </ListItem>
+    <>
+      <TableRow key="1" sx={{ borderBottom: 0 }}>
+        <TableCell component="th" scope="row">
+          <Avatar>#{props.rank}</Avatar>
+        </TableCell>
+        <TableCell>{props.name}</TableCell>
+        <TableCell
+          align="right"
+          style={{
+            color: props.emission <= 0 ? '#ff5252' : '#00c853',
+            fontWeight: 700,
+          }}
+        >
+          {props.emission}kg
+        </TableCell>
+        <TableCell align="right">
+          <ActionIconMenu email={props.email} isDeficit={props.emission <= 0} />
+        </TableCell>
+      </TableRow>
+    </>
   )
 }
+const ActionIconMenu = (props) => {
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
-const BasicTable = () => {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      <IconButton
+        aria-label="more"
+        id="long-button"
+        aria-controls={open ? 'long-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            width: '20ch',
+          },
+        }}
+      >
+        <MenuItem>Profile</MenuItem>
+        {props.isDeficit ? (
+          <MenuItem>Donate credit</MenuItem>
+        ) : (
+          <MenuItem>Ask for donation</MenuItem>
+        )}
+      </Menu>
+    </div>
   )
 }
-export default BuyCredit
+export default Leaderboard

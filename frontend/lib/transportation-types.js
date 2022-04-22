@@ -1,8 +1,3 @@
-const transportationTypes = [
-  'Diesel Car',
-  'Electric Vehicle',
-  'Motorcycle',
-  'Truck',
-]
+const transportationTypes = ['Flight', 'Car', 'Motorbike', 'Bus', 'Rail']
 
 export default transportationTypes
