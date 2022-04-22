@@ -210,10 +210,11 @@ const Index = ({ user, activities }) => {
               <Select
                 labelId="charity-label"
                 id="charity-select"
+                color="success"
                 defaultValue={CHARITIES[0].name}
               >
                 {CHARITIES.map(({ name }) => (
-                  <MenuItem key={name} value={name}>
+                  <MenuItem key={name} value={name} color="success">
                     {name}
                   </MenuItem>
                 ))}

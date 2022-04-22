@@ -1,32 +1,15 @@
 import {
-  Container,
-  List,
-  ListItemButton,
   ListItemText,
   Icon,
   ListItemIcon,
   Typography,
   Button,
-  FormControl,
-  InputLabel,
-  Select,
   MenuItem,
-  FormHelperText,
-  ListItem,
-  Divider,
-  ListItemAvatar,
   Avatar,
   Grid,
   IconButton,
-  Card,
-  CardContent,
-  Stack,
-  Modal,
 } from '@mui/material'
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import Input from '@mui/material/Input'
-import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -34,8 +17,6 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import DialogTitle from '@mui/material/DialogTitle'
-import Dialog from '@mui/material/Dialog'
 import Slider from '@mui/material/Slider'
 import axios from 'axios'
 import { getToken } from '../../lib/useAuth'
@@ -50,15 +31,8 @@ import Header from '../../components/Header'
 import { CHARITIES, AUTH_TOKEN_KEY } from '../../lib/constants'
 
 import AddIcon from '@mui/icons-material/Add'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import EnergySavingsLeafOutlinedIcon from '@mui/icons-material/EnergySavingsLeafOutlined'
 
 import BackButton from '../../components/BackButton'
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
-import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined'
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
 import ActionModal from '../../lib/ActionModal'
 
 const Leaderboard = ({ user, friends }) => {
