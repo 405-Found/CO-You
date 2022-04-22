@@ -184,6 +184,7 @@ const Leaderboard = ({ user, friends }) => {
                 <TableBody>
                   {friends.map(({ name, email, carbonCredit }, i) => (
                     <FriendItem
+                      router={router}
                       rank={`${i + 1}`}
                       name={name}
                       email={email}
@@ -251,6 +252,23 @@ const FriendItem = (props) => {
       : 0
   const setPctAmt = (newPct) =>
     setAmt((props.currentUser.carbonCredit * newPct) / 100)
+  const isMe = props.email === props.currentUser.email
+
+  const handleGift = async () => {
+    if (!amt) return
+    const res = await axios.post(
+      `/api/user/giveGift?token=${getToken()}&friendEmail=${
+        props.email
+      }&amount=${amt}`,
+      undefined,
+      {
+        requireCredentials: false,
+      }
+    )
+    console.log(res.data)
+    props.router.reload()
+  }
+
   return (
     <>
       <ActionModal open={giftModalOpen} onClose={() => setGiftModalOpen(false)}>
@@ -280,7 +298,13 @@ const FriendItem = (props) => {
           getAriaValueText={(value) => `${value}%`}
           valueLabelDisplay="off"
         />
-        <Button variant="contained" color="success" fullWidth disabled={!amt}>
+        <Button
+          variant="contained"
+          color="success"
+          fullWidth
+          disabled={!amt}
+          onClick={() => handleGift()}
+        >
           Transfer Credits
         </Button>
       </ActionModal>
@@ -288,7 +312,9 @@ const FriendItem = (props) => {
         <TableCell component="th" scope="row">
           <Avatar sx={{ width: 36, height: 36 }}>#{props.rank}</Avatar>
         </TableCell>
-        <TableCell>{props.name}</TableCell>
+        <TableCell>
+          {props.name} {isMe && '(Me)'}
+        </TableCell>
         <TableCell
           align="right"
           style={{
@@ -297,7 +323,7 @@ const FriendItem = (props) => {
           }}
         >
           {props.credits}
-          {isDeficit && !currentUserDeficit ? (
+          {!isMe && isDeficit && !currentUserDeficit ? (
             <Button
               size="small"
               color="success"

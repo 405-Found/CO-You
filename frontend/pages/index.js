@@ -23,7 +23,7 @@ import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { AUTH_TOKEN_KEY, CHARITIES, VEHICLE_TYPES } from '../lib/constants'
 import typeToIcon from '../lib/typeToIcon'
@@ -74,7 +74,10 @@ const VehicleTypeDialog = ({ router, open, setOpen }) => {
 
 const Index = ({ user, activities }) => {
   const router = useRouter()
-  if (!user) router.push('/sign-up-role-select')
+
+  useEffect(() => {
+    if (!user) router.push('/sign-up-role-select')
+  }, [])
 
   const [open, setOpen] = useState(false)
   const [balancePercentage, setBalancePercentage] = useState(30)
@@ -111,7 +114,7 @@ const Index = ({ user, activities }) => {
                 lineHeight: 1,
               }}
             >
-              {parseFloat(user.carbonCredit).toFixed(2)}
+              {parseFloat(user?.carbonCredit).toFixed(2)}
             </Typography>
 
             <Typography
