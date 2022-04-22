@@ -19,6 +19,7 @@ import {
   ListItemAvatar,
   Card,
   Grid,
+  IconButton,
 } from '@mui/material'
 import moment from 'moment'
 import { Box } from '@mui/system'
@@ -40,6 +41,7 @@ import LiquidFillGauge from 'react-liquid-gauge'
 import AddIcon from '@mui/icons-material/Add'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 
 const TYPE_TO_VERB = {
   Motorbike: 'Ride',
@@ -109,6 +111,19 @@ const Index = ({ user, activities }) => {
                   justifyContent="center"
                   alignItems="center"
                 >
+                  <Box
+                    style={{
+                      position: 'absolute',
+                      marginTop: '250px',
+                    }}
+                  >
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => router.push('/charities')}
+                    >
+                      <ArrowUpwardIcon />
+                    </IconButton>
+                  </Box>
                   <Grid item xs={1} className="home-circle-subtitle">
                     Emission Balance
                   </Grid>

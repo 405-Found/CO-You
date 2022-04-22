@@ -83,7 +83,7 @@ const Charities = () => {
               gutterBottom
               fontSize={30}
             >
-              Donate to a charity Organization
+              Top up your balance
             </Typography>
           </Box>
           <Wave
@@ -206,7 +206,7 @@ const Charities = () => {
                             2
                           )}
                         </Typography>{' '}
-                        credits
+                        CO2 credits
                       </Typography>
                     </CardActions>
                   ) : null}
