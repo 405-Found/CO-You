@@ -56,7 +56,7 @@ const Leaderboard = ({ user, friends }) => {
           router.reload()
         })
     } catch {
-      setErr('Invalid email')
+      setErr('No user with this email')
     }
   }
   return (
@@ -184,15 +184,20 @@ const Leaderboard = ({ user, friends }) => {
                   label="Friend's email"
                   value={friendEmail}
                   onChange={(event) => setFriendEmail(event.target.value)}
+                  fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                      >
+                        Add
+                      </Button>
+                    ),
+                  }}
                 />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  sx={{ mt: 2 }}
-                >
-                  Add Friend
-                </Button>
               </form>
             </ActionModal>
             <Button
@@ -296,7 +301,7 @@ const FriendItem = (props) => {
             fontWeight: 700,
           }}
         >
-          {props.credits}
+          {props.credits.toFixed(2)}kg
           {!isMe && isDeficit && !currentUserDeficit ? (
             <Button
               size="small"

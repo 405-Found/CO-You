@@ -45,8 +45,9 @@ const activityRecord = ({ type }) => {
   const secsToCo2 = (s) => s * 0.5
 
   const onEnd = async () => {
-    const duration = (secs / 3600).toFixed(2)
-    const distance = (typeToSpeed(type) * duration).toFixed(2)
+    const duration = secs / 3600
+    const distance = typeToSpeed(type) * duration
+    console.log(distance)
     // TODO:
     const res = await axios.post(`/api/user/addActivity?token=${getToken()}`, {
       description: '...',

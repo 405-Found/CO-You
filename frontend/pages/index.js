@@ -76,8 +76,12 @@ const Index = ({ user, activities }) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (!user) router.push('/sign-up-role-select')
-  }, [])
+    router.push('/user')
+  })
+
+  // useEffect(() => {
+  //   if (!user) router.push('/sign-up-role-select')
+  // }, [])
 
   const [open, setOpen] = useState(false)
   const [balancePercentage, setBalancePercentage] = useState(30)
@@ -163,7 +167,7 @@ const Index = ({ user, activities }) => {
                   <Icon>{typeToIcon(type)}</Icon>
                 </ListItemIcon>
                 <ListItemText
-                  primary={`${TYPE_TO_VERB[type]} ${distance}km ${
+                  primary={`${TYPE_TO_VERB[type]} ${distance * 1000}m ${
                     subtype ? `on ${subtype}` : ''
                   }`}
                   secondary={`${start ? moment(start).format('HH:mma') : ''} ${

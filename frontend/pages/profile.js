@@ -108,7 +108,7 @@ const Profile = ({ user, me, tip }) => {
             }}
             gutterBottom
           >
-            {user?.email}
+            {user?.userName || user?.email}
           </Typography>
           {isUserMe ? (
             <>
@@ -129,7 +129,7 @@ const Profile = ({ user, me, tip }) => {
               </Typography>
             </>
           ) : null}
-          {!isUserMe ? (
+          {/* {!isUserMe ? (
             <Button
               variant="contained"
               size="large"
@@ -142,7 +142,7 @@ const Profile = ({ user, me, tip }) => {
             >
               Add Friend
             </Button>
-          ) : null}
+          ) : null} */}
         </Container>
       </Box>
       <Box flex={1} display="flex" flexDirection="column">
@@ -171,7 +171,7 @@ const Profile = ({ user, me, tip }) => {
                 color="rgba(255,255,255,0.75)"
                 fontSize={14}
               >
-                {user?.email}'s Carbon Credits
+                {user?.userName || user?.email}'s Carbon Credits
               </Typography>
               <Typography
                 gutterBottom
