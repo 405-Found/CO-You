@@ -62,7 +62,7 @@ const activityRecord = () => (
                 <Grid item xs={1}>
                   <FlightIcon />
                 </Grid>
-                <Grid item xs={6.6}>
+                <Grid item xs={7}>
                   Vehicle
                 </Grid>
                 <Grid item xs={2} style={{ textAlign: 'right' }}>
@@ -75,11 +75,11 @@ const activityRecord = () => (
                 <Grid item xs={1}>
                   <FlightIcon />
                 </Grid>
-                <Grid item xs={5.2}>
+                <Grid item xs={7}>
                   Emission level
                 </Grid>
-                <Grid item xs={4} style={{ textAlign: 'right' }}>
-                  Very high
+                <Grid item xs={2} style={{ textAlign: 'right' }}>
+                  high
                 </Grid>
               </Grid>
             </Box>
