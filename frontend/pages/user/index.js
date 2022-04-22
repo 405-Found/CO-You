@@ -301,56 +301,6 @@ const Index = ({ user, activities }) => {
                           {' '}
                           Change charity
                         </Grid>
-                        <ActionModal
-                          open={changeOrgModalOpen}
-                          onClose={() => setChangeOrgModalOpen(false)}
-                        >
-                          <Typography variant="h6" gutterBottom>
-                            Charity Settings
-                          </Typography>
-                          <Box
-                            mt={2}
-                            sx={{
-                              gridTemplateColumns: {
-                                xs: '1fr',
-                                sm: '1fr auto 1fr',
-                              },
-                              alignItems: 'center',
-                            }}
-                          >
-                            <Box>
-                              <FormControl fullWidth color="success">
-                                <InputLabel
-                                  id="charity-label"
-                                  sx={{ bgcolor: '#FFF' }}
-                                >
-                                  Charity Organisation
-                                </InputLabel>
-                                <Select
-                                  labelId="charity-label"
-                                  id="charity-select"
-                                  defaultValue={CHARITIES[0].name}
-                                >
-                                  {CHARITIES.map(({ name }) => (
-                                    <MenuItem key={name} value={name}>
-                                      {name}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                                <FormHelperText>
-                                  The charity that companies who buys your
-                                  credit will donate to
-                                </FormHelperText>
-                                <Button
-                                  className="btn btn-primary"
-                                  style={{ marginTop: '10px' }}
-                                >
-                                  Submit
-                                </Button>
-                              </FormControl>
-                            </Box>
-                          </Box>
-                        </ActionModal>
                       </Grid>
                     </Card>
                   </Grid>
@@ -395,6 +345,55 @@ const Index = ({ user, activities }) => {
           </Grid>
         </Container>
       </Box>
+      <ActionModal
+        open={changeOrgModalOpen}
+        onClose={() => {
+          setChangeOrgModalOpen(false)
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Charity Settings
+        </Typography>
+        <Box
+          mt={2}
+          sx={{
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: '1fr auto 1fr',
+            },
+            alignItems: 'center',
+          }}
+        >
+          <Box>
+            <FormControl fullWidth color="success">
+              <InputLabel id="charity-label" sx={{ bgcolor: '#FFF' }}>
+                Charity Organisation
+              </InputLabel>
+              <Select
+                labelId="charity-label"
+                id="charity-select"
+                defaultValue={CHARITIES[0].name}
+              >
+                {CHARITIES.map(({ name }) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>
+                The charity that companies who buys your credit will donate to
+              </FormHelperText>
+              <Button
+                className="btn btn-primary"
+                style={{ marginTop: '10px' }}
+                onClick={() => setChangeOrgModalOpen(false)}
+              >
+                Submit
+              </Button>
+            </FormControl>
+          </Box>
+        </Box>
+      </ActionModal>
     </>
   )
 }
