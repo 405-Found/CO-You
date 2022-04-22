@@ -66,10 +66,19 @@
 
     box-shadow: none !important;
 }
+
 /* Buttons */
+.btn{
+    box-shadow: none !important;
+    transition: all 0.3s
+}
+
 .btn-primary{
-    background-color: rgb(90, 194, 98);
+    background-color: #00c853;
     color:white;
+}
+.btn-primary:hover{
+    background-color: #01ab48 !important;
 }
 .btn-yellow{
     background-color: rgb(243, 198, 65);
@@ -122,9 +131,11 @@
 
 /* Typography */
 .page-title {
-    font-size: 40px;
-    font-weight: bold;
-    color: rgb(80, 43, 3)
+    font-size: 32px;
+    line-height: 40px;
+    margin: 0 24px 24px;
+    color: #4b4b4b;
+    font-weight: 700;
 }
 
 /* Page-content */
