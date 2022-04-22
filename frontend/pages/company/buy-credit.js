@@ -35,6 +35,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import EnergySavingsLeafOutlinedIcon from '@mui/icons-material/EnergySavingsLeafOutlined'
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined'
 
+import BackButton from '../../components/BackButton'
 const TODAYS_ACTIVITIES = [
   {
     type: 'CAR',
@@ -129,7 +130,12 @@ const BuyCredit = () => {
         >
           <Grid item xs={3}>
             <div className="page-title">
-              How much carbon would you like to buy?
+              <div className="page-title">
+                <Box style={{ position: 'absolute', left: '5%' }}>
+                  <BackButton />
+                </Box>
+                <Box>How much carbon would you like to buy?</Box>
+              </div>
             </div>
           </Grid>
           <Grid item xs={3}>
@@ -154,7 +160,7 @@ const BuyCredit = () => {
 
 const InputAmount = () => {
   return (
-    <Box sx={{ '& > :not(style)': { m: 1 } }}>
+    <Box sx={{ width: '100%' }}>
       <FormControl variant="standard">
         <Input
           id="input-with-icon-adornment"

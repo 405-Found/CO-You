@@ -137,10 +137,12 @@ const BuyCredit = () => {
           >
             <Grid item xs={1}>
               <div className="page-title">
-                <Box style={{ position: 'absolute', left: '5%' }}>
-                  <BackButton />
-                </Box>
-                <Box>Purchase History</Box>
+                <div className="page-title">
+                  <Box style={{ position: 'absolute', left: '5%' }}>
+                    <BackButton />
+                  </Box>
+                  <Box>Purchase History</Box>
+                </div>
               </div>
             </Grid>
             <Grid item xs={6.5}>
