@@ -149,7 +149,7 @@ const Leaderboard = ({ user, friends }) => {
               </div>
             </div>
           </Grid>
-          <Grid item xs={8} width="100%">
+          <Grid item xs={7} maxWidth="600px">
             <TableContainer
               style={{
                 maxHeight: '350px',

@@ -29,7 +29,7 @@ import { useState } from 'react'
 import Header from '../../components/Header'
 import { AUTH_TOKEN_KEY, CHARITIES, VEHICLE_TYPES } from '../../lib/constants'
 import typeToIcon from '../../lib/typeToIcon'
-
+import ActionModal from '../../lib/ActionModal'
 // React gauge
 import { color } from 'd3-color'
 import { interpolateRgb } from 'd3-interpolate'
@@ -81,6 +81,7 @@ const VehicleTypeDialog = ({ router, open, setOpen }) => {
 const Index = ({ user, activities }) => {
   const router = useRouter()
   if (!user) router.push('/sign-up-role-select')
+  const [changeOrgModalOpen, setChangeOrgModalOpen] = useState(false)
 
   const [open, setOpen] = useState(false)
   const [balancePercentage, setBalancePercentage] = useState(30)
@@ -113,7 +114,7 @@ const Index = ({ user, activities }) => {
                   </Grid>
                   <Grid item xs={1}>
                     <Box className="home-circle-title">
-                      {parseFloat(user?.carbonCredit).toFixed(2)}
+                      {parseFloat(user?.carbonCredit).toFixed(2)} kg
                     </Box>
                   </Grid>
                   {balance < 0 ? (
@@ -156,7 +157,11 @@ const Index = ({ user, activities }) => {
               justifyContent="center"
             >
               <Container>
-                <Typography variant="overline">Today's activities</Typography>
+                <Typography variant="overline">
+                  {activities.length > 0
+                    ? "Today's activities"
+                    : 'No activity recorded!'}
+                </Typography>
                 <List>
                   {activities?.map(
                     (
@@ -237,7 +242,7 @@ const Index = ({ user, activities }) => {
 
                         <Grid item xs={6}>
                           {' '}
-                          Record activity
+                          Start activity
                         </Grid>
                       </Grid>
                     </Card>
@@ -246,6 +251,7 @@ const Index = ({ user, activities }) => {
                     <Card
                       className="card-yellow clickable"
                       style={{ width: '100%', height: '90px' }}
+                      onClick={() => setChangeOrgModalOpen(true)}
                     >
                       <Grid
                         container
@@ -265,6 +271,64 @@ const Index = ({ user, activities }) => {
                           {' '}
                           Change charity
                         </Grid>
+                        <ActionModal
+                          open={changeOrgModalOpen}
+                          onClose={() => setChangeOrgModalOpen(false)}
+                        >
+                          <Typography variant="h6" gutterBottom>
+                            Charity Settings
+                          </Typography>
+                          <Box
+                            mt={2}
+                            sx={{
+                              display: 'grid',
+                              gridTemplateColumns: {
+                                xs: '1fr',
+                                sm: '1fr auto 1fr',
+                              },
+                              alignItems: 'center',
+                            }}
+                          >
+                            <Box>
+                              <Typography variant="overline">
+                                My Charity
+                              </Typography>
+                              <FormControl fullWidth>
+                                <InputLabel
+                                  id="charity-label"
+                                  sx={{ bgcolor: '#FFF' }}
+                                >
+                                  Charity
+                                </InputLabel>
+                                <Select
+                                  labelId="charity-label"
+                                  id="charity-select"
+                                  defaultValue={CHARITIES[0].name}
+                                >
+                                  {CHARITIES.map(({ name }) => (
+                                    <MenuItem key={name} value={name}>
+                                      {name}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                                <FormHelperText>
+                                  The charity your affiliated company will
+                                  donate to
+                                </FormHelperText>
+                              </FormControl>
+                            </Box>
+                            <Divider>OR</Divider>
+                            <Box>
+                              <Button
+                                variant="contained"
+                                onClick={() => router.push('/charities')}
+                              >
+                                Donate
+                              </Button>{' '}
+                              to earn credits
+                            </Box>
+                          </Box>
+                        </ActionModal>
                       </Grid>
                     </Card>
                   </Grid>

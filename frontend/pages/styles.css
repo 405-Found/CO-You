@@ -3,10 +3,12 @@
     border-bottom: 2px solid #00c853;
   }
 
-  /* Slider colour */
-  /* .css-187mznn-MuiSlider-root {
-      color: #00c853 !important;
-  } */
+/* Header */
+.css-146r89d-MuiPaper-root-MuiAppBar-root {
+    border:none !important;
+    padding-top: 15px;
+    padding-left: 5px;
+}
 /* Clickable */
 .clickable *{
     cursor: grab !important;

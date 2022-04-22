@@ -117,6 +117,11 @@ const Index = () => {
             <Card
               className="card-primary clickable"
               style={{ width: '100%', height: '100px' }}
+              onClick={() =>
+                router.push({
+                  pathname: '/company/buy-credit',
+                })
+              }
             >
               <Grid
                 container
@@ -144,6 +149,11 @@ const Index = () => {
             <Card
               className="card-yellow clickable"
               style={{ width: '100%', height: '100px' }}
+              onClick={() =>
+                router.push({
+                  pathname: '/company/buy-history',
+                })
+              }
             >
               <Grid
                 container
@@ -172,6 +182,11 @@ const Index = () => {
             <Card
               className="card-red clickable"
               style={{ width: '100%', height: '100px' }}
+              onClick={() =>
+                router.push({
+                  pathname: '/company/buy-certificate',
+                })
+              }
             >
               <Grid
                 container

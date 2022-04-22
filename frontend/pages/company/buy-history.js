@@ -168,6 +168,11 @@ const BuyCredit = () => {
                 size="large"
                 className="btn btn-primary"
                 sx={{ minWidth: '200px', textAlign: 'center' }}
+                onClick={() =>
+                  router.push({
+                    pathname: '/company/buy-certificate',
+                  })
+                }
               >
                 Download Certificate
               </Button>

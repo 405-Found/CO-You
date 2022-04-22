@@ -18,7 +18,6 @@ export default function Header({
   return (
     <AppBar
       position={isFixed ? 'fixed' : 'static'}
-      {...(!isTransparent && { sx: { backgroundColor: '#F8F8F8' } })}
       variant="outlined"
       elevation={0}
       color="transparent"
@@ -26,10 +25,11 @@ export default function Header({
       <Toolbar>
         {showBackButton ? <BackButton /> : null}
         <Typography
-          variant="h4"
+          fontSize="20px"
+          fontWeight={700}
           sx={{ ...(isTransparent && { color: '#FFF' }) }}
         >
-          CarbonIO
+          Carbon.IO
         </Typography>
         <Box
           sx={{

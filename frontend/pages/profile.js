@@ -107,7 +107,15 @@ const Profile = ({ user, me, tip }) => {
               sx={{ width: 100, height: 100, zIndex: 9000 }}
             />
           </Badge>
-          <Typography variant="h3" fontWeight={500} sx={{ my: 2, mb: 4 }}>
+          <Typography
+            variant="h4"
+            className="page-title"
+            style={{
+              marginLeft: 0,
+              marginTop: '15px',
+            }}
+            gutterBottom
+          >
             {user?.email}
           </Typography>
           {!isUserMe ? (
@@ -128,7 +136,7 @@ const Profile = ({ user, me, tip }) => {
       </Box>
       <Box flex={1} display="flex" flexDirection="column">
         <Wave
-          fill="#81c784"
+          fill="#00c853"
           paused={false}
           options={{
             height: 40,
@@ -138,7 +146,7 @@ const Profile = ({ user, me, tip }) => {
           }}
           style={{ marginBottom: -20 }}
         />
-        <Box flex={1} bgcolor="#81c784" pb={8}>
+        <Box flex={1} bgcolor="#00c853" pb={8}>
           <Container
             sx={{
               display: 'grid',
@@ -157,7 +165,6 @@ const Profile = ({ user, me, tip }) => {
               <Typography
                 gutterBottom
                 sx={{
-                  fontFamily: 'monospace',
                   fontSize: 80,
                   color: '#FFF',
                   lineHeight: 1,
@@ -169,13 +176,13 @@ const Profile = ({ user, me, tip }) => {
                 <>
                   <Typography
                     fontSize={[12, 14]}
-                    color="rgba(255,255,255,0.75)"
+                    color="rgba(255,255,255,0.9)"
                     variant="overline"
                   >
                     Tip: {tip.catagory}
                   </Typography>
                   <Typography
-                    color="rgba(255,255,255,0.75)"
+                    color="rgba(255,255,255,0.85)"
                     fontSize={[14, 18]}
                   >
                     {tip.content}

@@ -25,7 +25,7 @@ const CarbonEstimate = ({ estimate }) => {
     })
   }
 
-  const nTrees = carbon2trees(estimate)
+  const nTrees = carbon2trees(estimate * 365)
 
   return (
     <>

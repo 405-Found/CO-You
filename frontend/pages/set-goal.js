@@ -31,7 +31,7 @@ const SetGoal = ({ topLine }) => {
       }
     )
     console.log(res.data)
-    router.push('/')
+    router.push('/user')
   }
 
   return (
@@ -51,8 +51,9 @@ const SetGoal = ({ topLine }) => {
               >
                 <CardContent>
                   <Stack spacing={2}>
-                    <Typography variant="subtitle">
-                      I would remain my current lifestyle by
+                    <Typography variant="subtitle" marginBottom="35px">
+                      To what extent would you like to remain your current
+                      lifestyle?
                     </Typography>
                     <Stack
                       spacing={2}
@@ -80,7 +81,7 @@ const SetGoal = ({ topLine }) => {
                       kg
                     </Typography>
                     <Typography variant="subtitle">
-                      Saving{' '}
+                      ={' '}
                       <boldGreen>
                         {carbon2trees(
                           (topLine - creditsPerDay) * 365
