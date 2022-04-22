@@ -301,7 +301,7 @@ const FriendItem = (props) => {
             fontWeight: 700,
           }}
         >
-          {props.credits.toFixed(2)}
+          {props.credits.toFixed(2)}kg
           {!isMe && isDeficit && !currentUserDeficit ? (
             <Button
               size="small"

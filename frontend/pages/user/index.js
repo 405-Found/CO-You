@@ -140,7 +140,7 @@ const Index = ({ user, activities }) => {
                     }}
                   ></Box>
                   <Grid item xs={1} className="home-circle-subtitle">
-                    Emission Balance
+                    Carbon Credits
                   </Grid>
                   <Grid item xs={1}>
                     <Box className="home-circle-title">

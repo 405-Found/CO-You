@@ -52,7 +52,7 @@ const SetGoal = ({ topLine }) => {
                 <CardContent>
                   <Stack spacing={2}>
                     <Typography variant="subtitle" marginBottom="35px">
-                      To what extent would you like to remain your current
+                      To what extent would you like to retain your current
                       lifestyle?
                     </Typography>
                     <Stack
@@ -81,13 +81,20 @@ const SetGoal = ({ topLine }) => {
                       kg
                     </Typography>
                     <Typography variant="subtitle">
-                      ={' '}
+                      Saving{' '}
                       <boldGreen>
                         {carbon2trees(
                           (topLine - creditsPerDay) * 365
                         ).toFixed()}
                       </boldGreen>{' '}
-                      trees every day
+                      trees every day{' '}
+                      <Icon>
+                        {goalPct <= 90
+                          ? goalPct <= 70
+                            ? 'mood'
+                            : 'sentiment_neutral'
+                          : 'mood_bad'}
+                      </Icon>
                     </Typography>
 
                     <Button
@@ -95,7 +102,7 @@ const SetGoal = ({ topLine }) => {
                       sx={{ maxWidth: '200px', textAlign: 'center' }}
                       onClick={onClick}
                     >
-                      Next
+                      Continue
                     </Button>
                   </Stack>
                 </CardContent>

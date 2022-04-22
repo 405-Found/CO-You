@@ -51,7 +51,7 @@ const CarbonEstimate = ({ estimate }) => {
                 <CardContent>
                   <Stack spacing={2}>
                     <Typography variant="subtitle">
-                      It is the same amount of{' '}
+                      It is the same amount of carbon dioxide that{' '}
                       <boldGreen>{nTrees.toFixed(2)}</boldGreen> trees offset
                       every day!
                     </Typography>
