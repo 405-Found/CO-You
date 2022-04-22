@@ -175,7 +175,7 @@ const Index = () => {
               </FormHelperText>
             </FormControl>
           </Box>
-          <Divider>Or</Divider>
+          <Divider>OR</Divider>
           <Box>
             <Button
               variant="contained"

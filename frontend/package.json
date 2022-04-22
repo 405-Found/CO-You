@@ -14,13 +14,17 @@
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.2",
     "axios": "^0.26.1",
+    "chart.js": "^3.7.1",
+    "chartjs-plugin-labels": "^1.1.0",
     "cookie-cutter": "^0.2.0",
     "d3-color": "^3.1.0",
     "d3-interpolate": "^3.0.1",
     "next": "12.1.5",
     "react": "18.0.0",
+    "react-chartjs-2": "^4.1.0",
     "react-dom": "18.0.0",
     "react-liquid-gauge": "^1.2.4",
+    "react-minimal-pie-chart": "^8.3.0",
     "react-wavify": "^1.5.7"
   },
   "devDependencies": {
