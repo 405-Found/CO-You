@@ -307,6 +307,9 @@ boldGreen{
 
     
 }
+.activity-pause-button:hover{
+    background-color: #bbfed7 !important;
+}
 .activity-display-box{
     height:60px;
 }
@@ -316,8 +319,12 @@ boldGreen{
     margin-left: -5px;
     max-width: 90%;
 }
-
-
+/* On too small devices */
+@media screen and (max-height: 700px) {
+    .home-activities{
+        display: none !important;
+    }
+}
 /* Report */
 .report-subtitle{
 

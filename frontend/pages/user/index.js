@@ -84,13 +84,13 @@ const Index = ({ user, activities }) => {
 
   const [open, setOpen] = useState(false)
   const [balancePercentage, setBalancePercentage] = useState(30)
-
+  const balance = parseFloat(user?.carbonCredit).toFixed(2)
   return (
     <>
       <Box
         sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
       >
-        <Header isFixed />
+        <Header isFixed user={user} />
 
         <Container>
           <Grid
@@ -109,17 +109,32 @@ const Index = ({ user, activities }) => {
                   alignItems="center"
                 >
                   <Grid item xs={1} className="home-circle-subtitle">
-                    Balance
+                    Emission Balance
                   </Grid>
                   <Grid item xs={1}>
-                    <Box className="home-circle-title">300kg</Box>
+                    <Box className="home-circle-title">
+                      {parseFloat(user?.carbonCredit).toFixed(2)}
+                    </Box>
                   </Grid>
+                  {balance < 0 ? (
+                    <Grid item xs={1}>
+                      Ask a friend to donate!
+                    </Grid>
+                  ) : (
+                    ''
+                  )}
                 </Grid>
               </Box>
-              <Box className="home-circle-background">
+              <Box
+                className="home-circle-background"
+                style={{
+                  backgroundColor: balance > 0 ? '#b9f6ca' : '#ffebee',
+                }}
+              >
                 <Gauge
                   value="50"
                   credit="30"
+                  balance={parseFloat(user?.carbonCredit).toFixed(2)}
                   style={{
                     marginLeft: '-19px',
                     marginTop: '-19px',
@@ -130,10 +145,15 @@ const Index = ({ user, activities }) => {
             <Grid
               item
               xs={3}
+              className="home-activities"
               style={{
                 overflowY: 'scroll',
                 paddingBottom: '5px',
+                height: '10vh',
+                backgroundColor: 'rgba(255,255,255,1)',
+                borderRadius: '30px 30px 0px 0px',
               }}
+              justifyContent="center"
             >
               <Container>
                 <Typography variant="overline">Today's activities</Typography>
@@ -190,7 +210,7 @@ const Index = ({ user, activities }) => {
                 </List>
               </Container>
             </Grid>
-            <Grid>
+            <Grid isFixed>
               <Container>
                 <Grid container spacing={2} style={{ textAlign: 'center' }}>
                   <Grid
@@ -249,7 +269,16 @@ const Index = ({ user, activities }) => {
                     </Card>
                   </Grid>
 
-                  <Grid item xs={6} className="clickable">
+                  <Grid
+                    item
+                    xs={6}
+                    className="clickable"
+                    onClick={() =>
+                      router.push({
+                        pathname: '/user/leaderboard',
+                      })
+                    }
+                  >
                     <Card
                       className="card-red clickable"
                       style={{ width: '100%', height: '90px' }}
@@ -269,7 +298,6 @@ const Index = ({ user, activities }) => {
                         </Grid>
 
                         <Grid item xs={6}>
-                          {' '}
                           Leaderboard
                         </Grid>
                       </Grid>
@@ -285,9 +313,9 @@ const Index = ({ user, activities }) => {
   )
 }
 
-const Gauge = ({ radius = 150, value, credit, ...props }) => {
-  const startColor = '#00c853' // cornflowerblue
-  const endColor = '#00c853' // crimson
+const Gauge = ({ radius = 150, value, balance, credit, ...props }) => {
+  const startColor = balance > 0 ? '#00c853' : '#ff5252' // cornflowerblue
+  const endColor = balance > 0 ? '#00c853' : '#ff5252' // crimson
   const interpolate = interpolateRgb(startColor, endColor)
   const fillColor = interpolate(value / 100)
   const gradientStops = [

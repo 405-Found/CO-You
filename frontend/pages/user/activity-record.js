@@ -59,7 +59,7 @@ const activityRecord = ({ type }) => {
       },
     })
     console.log(res.data)
-    router.push('/')
+    router.push('/user')
   }
 
   return (
@@ -107,10 +107,10 @@ const activityRecord = ({ type }) => {
                   <Grid item xs={1}>
                     <EnergySavingsLeafIcon />
                   </Grid>
-                  <Grid item xs={7}>
+                  <Grid item xs={6.5}>
                     Estimated carbon (kg)
                   </Grid>
-                  <Grid item xs={2} style={{ textAlign: 'right' }}>
+                  <Grid item xs={2.5} style={{ textAlign: 'right' }}>
                     {secsToCo2(secs).toFixed(2)}
                   </Grid>
                 </Grid>
@@ -124,10 +124,10 @@ const activityRecord = ({ type }) => {
                   <Grid item xs={1}>
                     <Icon>{typeToIcon(type)}</Icon>
                   </Grid>
-                  <Grid item xs={7}>
+                  <Grid item xs={5}>
                     Vehicle
                   </Grid>
-                  <Grid item xs={2} style={{ textAlign: 'right' }}>
+                  <Grid item xs={4} style={{ textAlign: 'right' }}>
                     {type}
                   </Grid>
                 </Grid>
@@ -141,10 +141,10 @@ const activityRecord = ({ type }) => {
                   <Grid item xs={1}>
                     <Icon>co2</Icon>
                   </Grid>
-                  <Grid item xs={7}>
+                  <Grid item xs={6}>
                     Emission level
                   </Grid>
-                  <Grid item xs={2} style={{ textAlign: 'right' }}>
+                  <Grid item xs={3} style={{ textAlign: 'right' }}>
                     {typeToEmissionLevel(type)}
                   </Grid>
                 </Grid>
