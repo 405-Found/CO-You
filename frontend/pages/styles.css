@@ -103,6 +103,9 @@
     background-color: rgb(243, 198, 65);
     color:white;
 }
+.btn-yellow:hover{
+    background-color: rgb(204, 167, 58);
+}
 .btn-red{
 
 }

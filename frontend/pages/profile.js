@@ -44,7 +44,7 @@ const Profile = ({ user, me, tip }) => {
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header isFixed user={user} />
+      <Header isFixed user={user} showBackButton />
 
       <Box
         display="flex"

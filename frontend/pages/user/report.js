@@ -98,15 +98,17 @@ const dailyReport = () => {
               </Typography>
               <Typography
                 sx={{
-                  fontSize: 80,
+                  fontSize: 60,
                   color: '#FFF',
+                  fontWeight: '700',
+                  marginBottom: '5px',
                   lineHeight: 1,
                 }}
               >
                 12.8 kg
               </Typography>
               <Typography color="#FFF" variant="h6" fontSize={18}>
-                carbon emission so far today!
+                CO2 emissions so far today!
               </Typography>
             </Container>
           </Box>
@@ -140,17 +142,37 @@ const dailyReport = () => {
                   <Box style={{ position: 'absolute', left: '5%' }}>
                     <BackButton />
                   </Box>
-                  <Box>List of companies who bought your savings</Box>
+                  <Box>These companies bought your emission savings</Box>
                 </div>
               </div>
             </Grid>
 
             <Grid item sx={11}>
               <List style={{}}>
-                <DonationHistoryItem />
-                <DonationHistoryItem />
-                <DonationHistoryItem />
+                <DonationHistoryItem
+                  companyname="Google"
+                  orgname="SaveTheTrees"
+                  amount="10"
+                />
+                <DonationHistoryItem
+                  companyname="Amazon"
+                  orgname="SaveTheTrees"
+                  amount="10"
+                />
+                <DonationHistoryItem
+                  companyname="Microsoft"
+                  orgname="SaveTheTrees"
+                  amount="20"
+                />
               </List>
+            </Grid>
+            <Grid item sx={1}>
+              <Button
+                className="btn btn-primary"
+                onClick={() => router.push('/user/report')}
+              >
+                Analyse my activities
+              </Button>
             </Grid>
           </Grid>
         </Container>
@@ -159,10 +181,10 @@ const dailyReport = () => {
   )
 }
 
-const DonationHistoryItem = () => {
+const DonationHistoryItem = (props) => {
   return (
     <ListItem
-      secondaryAction={<Box edge="end">$30</Box>}
+      secondaryAction={<Box edge="end">${props.amount}</Box>}
       sx={{ width: '340px' }}
     >
       <ListItemAvatar>
@@ -170,7 +192,10 @@ const DonationHistoryItem = () => {
           <AttachMoneyOutlinedIcon />
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary="Company name" secondary="to Organisation name" />
+      <ListItemText
+        primary={props.companyname}
+        secondary={<>To {props.orgname}</>}
+      />
     </ListItem>
   )
 }

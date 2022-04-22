@@ -76,14 +76,13 @@ const Charities = () => {
             alignItems="flex-end"
           >
             <Typography
-              variant="overline"
               color="#FFF"
               margin
               fontWeight="bold"
               gutterBottom
               fontSize={30}
             >
-              Top up your balance
+              Top up balance
             </Typography>
           </Box>
           <Wave

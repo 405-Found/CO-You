@@ -42,6 +42,7 @@ import AddIcon from '@mui/icons-material/Add'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import AssessmentIcon from '@mui/icons-material/Assessment'
 
 const TYPE_TO_VERB = {
   Motorbike: 'Ride',
@@ -123,7 +124,21 @@ const Index = ({ user, activities }) => {
                     >
                       <ArrowUpwardIcon />
                     </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => router.push('/user/report')}
+                    >
+                      <AssessmentIcon />
+                    </IconButton>
                   </Box>
+
+                  <Box
+                    style={{
+                      position: 'absolute',
+                      marginTop: '-100px',
+                      marginLeft: '-210px',
+                    }}
+                  ></Box>
                   <Grid item xs={1} className="home-circle-subtitle">
                     Emission Balance
                   </Grid>
@@ -296,7 +311,6 @@ const Index = ({ user, activities }) => {
                           <Box
                             mt={2}
                             sx={{
-                              display: 'grid',
                               gridTemplateColumns: {
                                 xs: '1fr',
                                 sm: '1fr auto 1fr',
@@ -305,16 +319,12 @@ const Index = ({ user, activities }) => {
                             }}
                           >
                             <Box>
-                              <Typography variant="overline">
-                                My Charity
-                              </Typography>
-                              <FormControl fullWidth>
+                              <FormControl fullWidth color="success">
                                 <InputLabel
-                                  color="success"
                                   id="charity-label"
                                   sx={{ bgcolor: '#FFF' }}
                                 >
-                                  Charity
+                                  Charity Organisation
                                 </InputLabel>
                                 <Select
                                   labelId="charity-label"
@@ -328,22 +338,16 @@ const Index = ({ user, activities }) => {
                                   ))}
                                 </Select>
                                 <FormHelperText>
-                                  The charity that companies will donate to
+                                  The charity that companies who buys your
+                                  credit will donate to
                                 </FormHelperText>
+                                <Button
+                                  className="btn btn-primary"
+                                  style={{ marginTop: '10px' }}
+                                >
+                                  Submit
+                                </Button>
                               </FormControl>
-                            </Box>
-                            <Divider>OR</Divider>
-                            <Box>
-                              <Button
-                                variant="contained"
-                                className="btn-primary"
-                                onClick={() => router.push('/charities')}
-                              >
-                                Donate
-                              </Button>{' '}
-                              <FormHelperText>
-                                to earn CO2 credits
-                              </FormHelperText>
                             </Box>
                           </Box>
                         </ActionModal>
