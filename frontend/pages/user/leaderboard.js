@@ -38,6 +38,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
 import Slider from '@mui/material/Slider'
 import axios from 'axios'
+import { getToken } from '../../lib/useAuth'
 
 import Menu from '@mui/material/Menu'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -60,9 +61,30 @@ import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
 import ActionModal from '../../lib/ActionModal'
 
-const Leaderboard = ({ user }) => {
+const Leaderboard = ({ user, friends }) => {
   const router = useRouter()
   if (!user) router.push('/')
+  const [addFriendModalOpen, setAddFriendModalOpen] = useState(false)
+  const [friendEmail, setFriendEmail] = useState('')
+  const [err, setErr] = useState('')
+  const onAddFriendSubmit = async (event) => {
+    event.preventDefault()
+    try {
+      await axios
+        .post(
+          `/api/user/addFriend?token=${getToken()}&email=${friendEmail}`,
+          undefined,
+          {
+            withCredentials: false,
+          }
+        )
+        .then(() => {
+          router.reload()
+        })
+    } catch {
+      setErr('Invalid email')
+    }
+  }
   return (
     <>
       <Box
@@ -160,24 +182,52 @@ const Leaderboard = ({ user }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <FriendItem
-                    rank="1"
-                    name="Ben"
-                    email="ben12@xyz.com"
-                    credits="-5.3"
-                    currentUser={user}
-                  />
+                  {friends.map(({ name, email, carbonCredit }, i) => (
+                    <FriendItem
+                      router={router}
+                      rank={`${i + 1}`}
+                      name={name}
+                      email={email}
+                      credits={carbonCredit}
+                      currentUser={user}
+                    />
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
           </Grid>
           <Grid item xs={1}>
+            <ActionModal
+              open={addFriendModalOpen}
+              onClose={() => setAddFriendModalOpen(false)}
+            >
+              <Typography variant="h6" gutterBottom>
+                Add Friend
+              </Typography>
+              <form onSubmit={onAddFriendSubmit}>
+                {err && <Typography color="red">{err}</Typography>}
+                <TextField
+                  label="Friend's email"
+                  value={friendEmail}
+                  onChange={(event) => setFriendEmail(event.target.value)}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 2 }}
+                >
+                  Add Friend
+                </Button>
+              </form>
+            </ActionModal>
             <Button
               variant="contained"
               startIcon={<AddIcon />}
               size="large"
               className="btn btn-primary"
               sx={{ minWidth: '200px', textAlign: 'center' }}
+              onClick={() => setAddFriendModalOpen(true)}
             >
               Add friend
             </Button>
@@ -202,6 +252,23 @@ const FriendItem = (props) => {
       : 0
   const setPctAmt = (newPct) =>
     setAmt((props.currentUser.carbonCredit * newPct) / 100)
+  const isMe = props.email === props.currentUser.email
+
+  const handleGift = async () => {
+    if (!amt) return
+    const res = await axios.post(
+      `/api/user/giveGift?token=${getToken()}&friendEmail=${
+        props.email
+      }&amount=${amt}`,
+      undefined,
+      {
+        requireCredentials: false,
+      }
+    )
+    console.log(res.data)
+    props.router.reload()
+  }
+
   return (
     <>
       <ActionModal open={giftModalOpen} onClose={() => setGiftModalOpen(false)}>
@@ -226,13 +293,18 @@ const FriendItem = (props) => {
             { value: 75, label: '75%' },
             { value: 100, label: '100%' },
           ]}
-          donate
           onChange={(_, newVal) => setPctAmt(newVal)}
           value={pctAmt}
           getAriaValueText={(value) => `${value}%`}
           valueLabelDisplay="off"
         />
-        <Button variant="contained" color="success" fullWidth disabled={!amt}>
+        <Button
+          variant="contained"
+          color="success"
+          fullWidth
+          disabled={!amt}
+          onClick={() => handleGift()}
+        >
           Transfer Credits
         </Button>
       </ActionModal>
@@ -240,7 +312,9 @@ const FriendItem = (props) => {
         <TableCell component="th" scope="row">
           <Avatar sx={{ width: 36, height: 36 }}>#{props.rank}</Avatar>
         </TableCell>
-        <TableCell>{props.name}</TableCell>
+        <TableCell>
+          {props.name} {isMe && '(Me)'}
+        </TableCell>
         <TableCell
           align="right"
           style={{
@@ -249,7 +323,7 @@ const FriendItem = (props) => {
           }}
         >
           {props.credits}
-          {isDeficit && !currentUserDeficit ? (
+          {!isMe && isDeficit && !currentUserDeficit ? (
             <Button
               size="small"
               color="success"
@@ -286,17 +360,6 @@ const ActionIconMenu = (props) => {
   }
   const handleClose = () => {
     setAnchorEl(null)
-  }
-  // For the dialogue requesting for amount of donation
-  const [openInput, setOpenInput] = React.useState(false)
-
-  const handleInputClick = () => {
-    setOpen(true)
-  }
-
-  const handleInputClose = (value) => {
-    setOpenInput(false)
-    setSelectedValue(value)
   }
 
   return (
@@ -343,7 +406,11 @@ export async function getServerSideProps(context) {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/userToken?token=${token}`
     )
-    return { props: { user: res.data } }
+    const res2 = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/friends?token=${token}`
+    )
+    console.log(res2.data)
+    return { props: { user: res.data, friends: res2.data } }
   }
   return {
     props: {},

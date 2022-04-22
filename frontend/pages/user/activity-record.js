@@ -89,7 +89,7 @@ const activityRecord = ({ type }) => {
                 component="span"
                 style={{ color: '#4caf50', borderColor: '#4caf50' }}
                 onClick={() => {
-                  clearInterval(invl)
+                  if (invl) clearInterval(invl)
                   onEnd()
                 }}
               >

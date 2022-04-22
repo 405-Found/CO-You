@@ -17,6 +17,7 @@ import {
   DialogTitle,
   ListItem,
   ListItemAvatar,
+  Card,
   Grid,
 } from '@mui/material'
 import moment from 'moment'
@@ -35,6 +36,10 @@ import { interpolateRgb } from 'd3-interpolate'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import LiquidFillGauge from 'react-liquid-gauge'
+
+import AddIcon from '@mui/icons-material/Add'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 
 const TYPE_TO_VERB = {
   Motorbike: 'Ride',
@@ -113,7 +118,7 @@ const Index = ({ user, activities }) => {
               </Box>
               <Box className="home-circle-background">
                 <Gauge
-                  value="10"
+                  value="50"
                   credit="30"
                   style={{
                     marginLeft: '-19px',
@@ -122,7 +127,14 @@ const Index = ({ user, activities }) => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid
+              item
+              xs={3}
+              style={{
+                overflowY: 'scroll',
+                paddingBottom: '5px',
+              }}
+            >
               <Container>
                 <Typography variant="overline">Today's activities</Typography>
                 <List>
@@ -152,21 +164,20 @@ const Index = ({ user, activities }) => {
                           }`}
                           secondary={`${
                             start ? moment(start).format('HH:mma') : ''
-                          } ${
-                            end ? ` - ${moment(end).format('HH:mma')}` : ''
-                          } ${departurePos ? `from ${departurePos}` : ''} ${
-                            arrivalPos ? `to ${arrivalPos}` : ''
-                          }`}
+                          } 
+                          `}
                           secondaryTypographyProps={{ fontSize: 14 }}
+                          sx={{
+                            width: '130px',
+                          }}
                         />
                         <Typography
-                          fontFamily="monospace"
-                          color="#c62828"
+                          color="#ff5252"
                           fontWeight={600}
                           fontSize={15}
                           textAlign="end"
                         >
-                          -{`${carbonAmount.toFixed(2)} pts`}
+                          -{`${carbonAmount.toFixed(2)} kg`}
                         </Typography>
                       </ListItem>
                     )
@@ -176,54 +187,95 @@ const Index = ({ user, activities }) => {
                     open={open}
                     setOpen={setOpen}
                   />
-                  <ListItemButton onClick={() => setOpen(true)}>
-                    <ListItemIcon>
-                      <Icon>add</Icon>
-                    </ListItemIcon>
-                    <ListItemText>Start recording</ListItemText>
-                  </ListItemButton>
                 </List>
-                <Box
-                  mt={2}
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', sm: '1fr auto 1fr' },
-                    alignItems: 'center',
-                  }}
-                >
-                  <Box>
-                    <Typography variant="overline">My Charity</Typography>
-                    <FormControl fullWidth>
-                      <InputLabel id="charity-label" sx={{ bgcolor: '#FFF' }}>
-                        Charity
-                      </InputLabel>
-                      <Select
-                        labelId="charity-label"
-                        id="charity-select"
-                        defaultValue={CHARITIES[0].name}
-                      >
-                        {CHARITIES.map(({ name }) => (
-                          <MenuItem key={name} value={name}>
-                            {name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      <FormHelperText>
-                        The charity your affiliated company will donate to
-                      </FormHelperText>
-                    </FormControl>
-                  </Box>
-                  <Divider>OR</Divider>
-                  <Box>
-                    <Button
-                      variant="contained"
-                      onClick={() => router.push('/charities')}
+              </Container>
+            </Grid>
+            <Grid>
+              <Container>
+                <Grid container spacing={2} style={{ textAlign: 'center' }}>
+                  <Grid
+                    item
+                    xs={12}
+                    className="clickable"
+                    onClick={() => setOpen(true)}
+                  >
+                    <Card
+                      className="card-primary clickable"
+                      style={{ width: '100%', height: '90px' }}
                     >
-                      Donate
-                    </Button>{' '}
-                    to earn credits
-                  </Box>
-                </Box>
+                      <Grid
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={0}
+                        style={{}}
+                      >
+                        <Grid item xs={6}>
+                          <AddIcon sx={{ fontSize: 35, color: '#00c853' }} />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          {' '}
+                          Record activity
+                        </Grid>
+                      </Grid>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={6} className="clickable">
+                    <Card
+                      className="card-yellow clickable"
+                      style={{ width: '100%', height: '90px' }}
+                    >
+                      <Grid
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={0}
+                        style={{}}
+                      >
+                        <Grid item xs={6}>
+                          <AccessTimeIcon
+                            sx={{ fontSize: 35, color: '#fbc02d' }}
+                          />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          {' '}
+                          Change charity
+                        </Grid>
+                      </Grid>
+                    </Card>
+                  </Grid>
+
+                  <Grid item xs={6} className="clickable">
+                    <Card
+                      className="card-red clickable"
+                      style={{ width: '100%', height: '90px' }}
+                    >
+                      <Grid
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={0}
+                        style={{}}
+                      >
+                        <Grid item xs={6}>
+                          <EmojiEventsIcon
+                            sx={{ fontSize: 35, color: '#ff5252' }}
+                          />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          {' '}
+                          Leaderboard
+                        </Grid>
+                      </Grid>
+                    </Card>
+                  </Grid>
+                </Grid>
               </Container>
             </Grid>
           </Grid>
