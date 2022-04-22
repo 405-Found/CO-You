@@ -7,6 +7,7 @@ import ListItem from '@mui/material/ListItem'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import transportationTypes from '../lib/transportation-types'
+import useAuth from '../lib/useAuth'
 
 const TransportationType = ({ typeName, onChange, value }) => (
   <ListItem>
@@ -29,6 +30,8 @@ const TransportationType = ({ typeName, onChange, value }) => (
 
 const TransportationEstimate = () => {
   const router = useRouter()
+  useAuth(router)
+
   const [hourData, setHourData] = useState(
     transportationTypes.reduce((a, v) => ({ ...a, [v]: '0' }), {})
   )

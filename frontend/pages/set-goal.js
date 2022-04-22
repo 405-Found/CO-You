@@ -77,7 +77,7 @@ export async function getServerSideProps(context) {
   console.log(context.query)
   return {
     props: {
-      topLine: context.query?.topline || '  ',
+      topLine: context.query?.topline || '',
     },
   }
 }

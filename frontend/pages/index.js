@@ -7,11 +7,16 @@ import {
   ListItemIcon,
   Typography,
   Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
 import Header from '../components/Header'
+import { CHARITIES } from '../lib/constants'
 
 const TODAYS_ACTIVITIES = [
   {
@@ -143,15 +148,18 @@ const Index = () => {
           </ListItemButton>
         </List>
         <Box mt={2}>
-          <Typography variant="overline">Donate to Charity</Typography>
-          <Box
-            display="grid"
-            gridTemplateColumns="auto 1fr"
-            gap={1}
-            alignItems="center"
-          >
-            <Button variant="contained">Donate</Button>
-            <Typography variant="body2">to get more carbon credits</Typography>
+          <Typography variant="overline">My Charity</Typography>
+          <Box>
+            <FormControl fullWidth>
+              <InputLabel id="charity-label">Charity</InputLabel>
+              <Select labelId="charity-label" id="charity-select">
+                {CHARITIES.map(({ name }) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
         </Box>
       </Container>

@@ -30,7 +30,7 @@ export default function Header({ showBackButton, isFixed, isTransparent }) {
             justifyContent: 'flex-end',
           }}
         >
-          <Button
+          {/* <Button
             color="primary"
             sx={{ ...(isTransparent && { color: '#FFF' }) }}
           >
@@ -41,7 +41,7 @@ export default function Header({ showBackButton, isFixed, isTransparent }) {
             sx={{ ...(isTransparent && { color: '#FFF' }) }}
           >
             Logout
-          </Button>
+          </Button> */}
         </Box>
       </Toolbar>
     </AppBar>
