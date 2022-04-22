@@ -113,9 +113,9 @@ const Index = () => {
       </Box>
       <Container>
         <Grid container spacing={2} style={{ textAlign: 'center' }}>
-          <Grid item xs={6}>
+          <Grid item xs={6} className="clickable">
             <Card
-              className="card-primary"
+              className="card-primary clickable"
               style={{ width: '100%', height: '100px' }}
             >
               <Grid
@@ -140,9 +140,9 @@ const Index = () => {
               </Grid>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} className="clickable">
             <Card
-              className="card-yellow"
+              className="card-yellow clickable"
               style={{ width: '100%', height: '100px' }}
             >
               <Grid
@@ -168,9 +168,9 @@ const Index = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={6} className="clickable">
             <Card
-              className="card-red"
+              className="card-red clickable"
               style={{ width: '100%', height: '100px' }}
             >
               <Grid
@@ -195,9 +195,9 @@ const Index = () => {
               </Grid>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} className="clickable">
             <Card
-              className="card-blue"
+              className="card-blue clickable"
               style={{ width: '100%', height: '100px' }}
             >
               <Grid
