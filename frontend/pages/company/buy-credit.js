@@ -86,20 +86,14 @@ const BuyCredit = () => {
             </Typography>
             <Typography
               sx={{
-                fontFamily: 'monospace',
                 fontSize: 80,
                 color: '#FFF',
                 lineHeight: 1,
               }}
             >
-              12.8
+              12.8 kg
             </Typography>
-            <Typography
-              color="#FFF"
-              variant="h6"
-              fontFamily="monospace"
-              fontSize={18}
-            >
+            <Typography color="#FFF" variant="h6" fontSize={18}>
               carbon credits
             </Typography>
           </Container>

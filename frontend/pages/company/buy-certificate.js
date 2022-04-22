@@ -77,7 +77,7 @@ const BuyCredit = () => {
           }}
         >
           <Box
-            sx={{ backgroundColor: '#00c853' }}
+            sx={{ backgroundColor: '#00c853', paddingLeft: '20px' }}
             height={240}
             display="flex"
             alignItems="flex-end"
@@ -93,17 +93,17 @@ const BuyCredit = () => {
                 Proof of balance
               </Typography>
               <br />
-              <Typography color="#FFF" fontSize={18}>
+              <Typography color="#FFF" fontSize={18} variant="h6">
                 [Company name] has
               </Typography>
               <Typography
                 sx={{
-                  fontSize: 80,
+                  fontSize: 60,
                   color: '#FFF',
                   lineHeight: 1,
                 }}
               >
-                12.8
+                12.8 KG
               </Typography>
               <Typography color="#FFF" variant="h6" fontSize={18}>
                 carbon credits
@@ -136,20 +136,22 @@ const BuyCredit = () => {
           >
             <Grid item xs={1}>
               <div className="page-title">
-                <Box>Donation History</Box>
+                <div className="page-title">
+                  <Box style={{ position: 'absolute', left: '5%' }}>
+                    <BackButton />
+                  </Box>
+                  <Box>Donation History</Box>
+                </div>
               </div>
             </Grid>
-            <Grid item xs={6.5}>
+
+            <Grid item sx={11}>
               <List style={{}}>
-                <DonationHistoryItem />
-                <DonationHistoryItem />
-                <DonationHistoryItem />
                 <DonationHistoryItem />
                 <DonationHistoryItem />
                 <DonationHistoryItem />
               </List>
             </Grid>
-            <Grid item xs={3}></Grid>
           </Grid>
         </Container>
       </Box>

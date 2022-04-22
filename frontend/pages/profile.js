@@ -21,6 +21,7 @@ import stc from 'string-to-color'
 import typeToColor from '../lib/typeToColor'
 import { AUTH_TOKEN_KEY } from '../lib/constants'
 
+import Header from '../components/Header'
 const Profile = ({ user, me, tip }) => {
   const isUserMe = user.userID === me.userID
   const router = useRouter()
@@ -43,24 +44,15 @@ const Profile = ({ user, me, tip }) => {
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <AppBar
-        color="transparent"
-        variant="outlined"
-        elevation={0}
-        position="fixed"
-        sx={{ border: 0 }}
+      <Header isFixed user={user} />
+
+      <Box
+        display="flex"
+        alignItems="flex-end"
+        marginTop="80px"
+        paddingLeft={4}
+        paddingRight={4}
       >
-        <Toolbar>
-          <Container>
-            <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-              <IconButton onClick={() => router.back()}>
-                <Icon>close</Icon>
-              </IconButton>
-            </Box>
-          </Container>
-        </Toolbar>
-      </AppBar>
-      <Box display="flex" alignItems="flex-end">
         <Container sx={{ py: 4 }}>
           <Badge
             overlap="circular"
@@ -118,6 +110,25 @@ const Profile = ({ user, me, tip }) => {
           >
             {user?.email}
           </Typography>
+          {isUserMe ? (
+            <>
+              <Typography
+                fontSize={[12, 14]}
+                color="rgba(0,0,0)"
+                variant="overline"
+                fontWeight="700"
+              >
+                Tips to reduce carbon emission: {tip.catagory}
+              </Typography>
+              <Typography
+                color="rgba(0,0,0,0.6)"
+                lineHeight="1.5"
+                fontSize="16"
+              >
+                {tip.content}
+              </Typography>
+            </>
+          ) : null}
           {!isUserMe ? (
             <Button
               variant="contained"
@@ -165,30 +176,14 @@ const Profile = ({ user, me, tip }) => {
               <Typography
                 gutterBottom
                 sx={{
-                  fontSize: 80,
+                  fontSize: 40,
                   color: '#FFF',
+                  fontWeight: '700',
                   lineHeight: 1,
                 }}
               >
-                {parseFloat(user?.carbonCredit, 2).toFixed(2)}
+                {parseFloat(user?.carbonCredit, 2).toFixed(2)} kg
               </Typography>
-              {isUserMe ? (
-                <>
-                  <Typography
-                    fontSize={[12, 14]}
-                    color="rgba(255,255,255,0.9)"
-                    variant="overline"
-                  >
-                    Tip: {tip.catagory}
-                  </Typography>
-                  <Typography
-                    color="rgba(255,255,255,0.85)"
-                    fontSize={[14, 18]}
-                  >
-                    {tip.content}
-                  </Typography>
-                </>
-              ) : null}
             </Box>
             <Paper
               sx={{

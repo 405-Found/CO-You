@@ -322,7 +322,7 @@ boldGreen{
     max-width: 90%;
 }
 /* On too small devices */
-@media screen and (max-height: 700px) {
+@media screen and (max-height: 600px) {
     .home-activities{
         display: none !important;
     }

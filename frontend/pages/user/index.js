@@ -295,6 +295,7 @@ const Index = ({ user, activities }) => {
                               </Typography>
                               <FormControl fullWidth>
                                 <InputLabel
+                                  color="success"
                                   id="charity-label"
                                   sx={{ bgcolor: '#FFF' }}
                                 >
@@ -312,8 +313,7 @@ const Index = ({ user, activities }) => {
                                   ))}
                                 </Select>
                                 <FormHelperText>
-                                  The charity your affiliated company will
-                                  donate to
+                                  The charity that companies will donate to
                                 </FormHelperText>
                               </FormControl>
                             </Box>
@@ -321,11 +321,14 @@ const Index = ({ user, activities }) => {
                             <Box>
                               <Button
                                 variant="contained"
+                                className="btn-primary"
                                 onClick={() => router.push('/charities')}
                               >
                                 Donate
                               </Button>{' '}
-                              to earn credits
+                              <FormHelperText>
+                                to earn CO2 credits
+                              </FormHelperText>
                             </Box>
                           </Box>
                         </ActionModal>

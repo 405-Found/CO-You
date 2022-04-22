@@ -64,7 +64,7 @@ const activityRecord = ({ type }) => {
 
   return (
     <Box className="app-frame" style={{ backgroundColor: '#4caf50' }}>
-      <Header />
+      <Header isTransparent />
       <Container
         className="app-container"
         style={{ backgroundColor: '#4caf50' }}
