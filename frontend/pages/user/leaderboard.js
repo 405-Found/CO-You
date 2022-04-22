@@ -128,76 +128,74 @@ const Leaderboard = () => {
             }}
           />
         </Box>
-        <Container>
-          <Grid
-            container
-            direction="column"
-            justifyContent="flex-start"
-            alignItems="center"
-            style={{ height: '70vh' }}
-          >
-            <Grid item xs={1}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+          style={{ height: '70vh' }}
+        >
+          <Grid item xs={1}>
+            <div className="page-title">
               <div className="page-title">
-                <div className="page-title">
-                  <Box style={{ position: 'absolute', left: '5%' }}>
-                    <BackButton />
-                  </Box>
-                  <Box>Friends</Box>
-                </div>
+                <Box style={{ position: 'absolute', left: '5%' }}>
+                  <BackButton />
+                </Box>
+                <Box>Friends</Box>
               </div>
-            </Grid>
-            <Grid item xs={8}>
-              <TableContainer
-                style={{
-                  maxHeight: '350px',
-                  overflowY: 'scroll',
-                  scrollBehaviour: 'smooth',
-                }}
-              >
-                <Table sx={{}} aria-label="simple table">
-                  <TableHead>
-                    <TableRow key="1" sx={{ borderBottom: 0 }}>
-                      <TableCell className="table-head">Rank</TableCell>
-                      <TableCell className="table-head">Name</TableCell>
-                      <TableCell align="right" className="table-head">
-                        <Box
-                          style={{
-                            textAlign: 'right',
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          Emission save
-                        </Box>
-                      </TableCell>
-                      <TableCell align="right" className="table-head">
-                        Action
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <FriendItem rank="1" name="Kevin" emission="300" />
-                    <FriendItem rank="1" name="Riley" emission="500" />
-                    <FriendItem rank="1" name="Kevin" emission="300" />
-                    <FriendItem rank="1" name="Kevin" emission="300" />
-                    <FriendItem rank="1" name="Kevin" emission="300" />
-                    <FriendItem rank="1" name="Kevin" emission="-30" />
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid>
-            <Grid item xs={1}>
-              <Button
-                variant="contained"
-                startIcon={<AddIcon />}
-                size="large"
-                className="btn btn-primary"
-                sx={{ minWidth: '200px', textAlign: 'center' }}
-              >
-                Add friend
-              </Button>
-            </Grid>
+            </div>
           </Grid>
-        </Container>
+          <Grid item xs={8} width="100%">
+            <TableContainer
+              style={{
+                maxHeight: '350px',
+                overflowY: 'scroll',
+                scrollBehaviour: 'smooth',
+              }}
+            >
+              <Table sx={{}} aria-label="simple table">
+                <TableHead>
+                  <TableRow key="1" sx={{ borderBottom: 0 }}>
+                    <TableCell className="table-head">Rank</TableCell>
+                    <TableCell className="table-head">Name</TableCell>
+                    <TableCell align="right" className="table-head">
+                      <Box
+                        style={{
+                          textAlign: 'right',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        Carbon Credits
+                      </Box>
+                    </TableCell>
+                    <TableCell align="right" className="table-head">
+                      Actions
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <FriendItem
+                    rank="1"
+                    name="Ben"
+                    email="ben12@xyz.com"
+                    credits="-50"
+                  />
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              size="large"
+              className="btn btn-primary"
+              sx={{ minWidth: '200px', textAlign: 'center' }}
+            >
+              Add friend
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </>
   )
@@ -213,30 +211,44 @@ const FriendItem = (props) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const isDeficit = props.credits < 0
   return (
     <>
       <TableRow key="1" sx={{ borderBottom: 0 }}>
         <TableCell component="th" scope="row">
-          <Avatar>#{props.rank}</Avatar>
+          <Avatar sx={{ width: 36, height: 36 }}>#{props.rank}</Avatar>
         </TableCell>
         <TableCell>{props.name}</TableCell>
         <TableCell
           align="right"
           style={{
-            color: props.emission <= 0 ? '#ff5252' : '#00c853',
+            color: props.credits <= 0 ? '#ff5252' : '#00c853',
             fontWeight: 700,
           }}
+          numeric
         >
-          {props.emission}kg
+          {props.credits}
+          {isDeficit ? (
+            <Button
+              size="small"
+              color="success"
+              startIcon={<Icon>volunteer_activism</Icon>}
+              variant="contained"
+              sx={{ ml: 1 }}
+            >
+              Gift
+            </Button>
+          ) : null}
         </TableCell>
         <TableCell align="right">
-          <ActionIconMenu email={props.email} isDeficit={props.emission <= 0} />
+          <ActionIconMenu email={props.email} isDeficit={isDeficit} />
         </TableCell>
       </TableRow>
     </>
   )
 }
 const ActionIconMenu = (props) => {
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -283,12 +295,17 @@ const ActionIconMenu = (props) => {
           },
         }}
       >
-        <MenuItem>Profile</MenuItem>
+        <MenuItem onClick={() => router.push(`/profile?email=${props.email}`)}>
+          <ListItemIcon>
+            <Icon>account_circle</Icon>
+          </ListItemIcon>
+          <ListItemText>View Profile</ListItemText>
+        </MenuItem>
         {props.isDeficit ? (
-          <MenuItem onClick={openInput}>Donate credit</MenuItem>
-        ) : (
-          <MenuItem>Ask for donation</MenuItem>
-        )}
+          <MenuItem>
+            <ListItemIcon>Gift</ListItemIcon>
+          </MenuItem>
+        ) : null}
       </Menu>
     </div>
   )
