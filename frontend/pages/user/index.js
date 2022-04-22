@@ -214,9 +214,9 @@ const Index = ({ user, activities }) => {
                           <Icon>{typeToIcon(type)}</Icon>
                         </ListItemIcon>
                         <ListItemText
-                          primary={`${TYPE_TO_VERB[type]} ${distance}km ${
-                            subtype ? `on ${subtype}` : ''
-                          }`}
+                          primary={`${TYPE_TO_VERB[type]} ${(
+                            distance * 1000
+                          ).toFixed(0)}m ${subtype ? `on ${subtype}` : ''}`}
                           secondary={`${
                             start ? moment(start).format('HH:mma') : ''
                           } 
