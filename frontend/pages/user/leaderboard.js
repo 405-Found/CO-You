@@ -21,8 +21,9 @@ import {
   Card,
   CardContent,
   Stack,
+  Modal,
 } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Input from '@mui/material/Input'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -35,6 +36,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
+import Slider from '@mui/material/Slider'
+import axios from 'axios'
 
 import Menu from '@mui/material/Menu'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -43,7 +46,7 @@ import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
 import Header from '../../components/Header'
-import { CHARITIES } from '../../lib/constants'
+import { CHARITIES, AUTH_TOKEN_KEY } from '../../lib/constants'
 
 import AddIcon from '@mui/icons-material/Add'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
@@ -55,32 +58,11 @@ import BackButton from '../../components/BackButton'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
 import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
+import ActionModal from '../../lib/ActionModal'
 
-const TODAYS_ACTIVITIES = [
-  {
-    type: 'CAR',
-    subtype: 'diesel',
-    distance: 50,
-    time: '14:02 to 16:01',
-    credits: -1,
-  },
-  {
-    type: 'PLANE',
-    distance: 1000,
-    time: '07:03 to 09:04',
-    credits: -10,
-    from: 'MEL',
-    to: 'LAX',
-  },
-]
-
-const TYPE_TO_VERB = {
-  CAR: 'Drive',
-  PLANE: 'Fly',
-}
-
-const Leaderboard = () => {
+const Leaderboard = ({ user }) => {
   const router = useRouter()
+  if (!user) router.push('/')
   return (
     <>
       <Box
@@ -158,7 +140,11 @@ const Leaderboard = () => {
                   <TableRow key="1" sx={{ borderBottom: 0 }}>
                     <TableCell className="table-head">Rank</TableCell>
                     <TableCell className="table-head">Name</TableCell>
-                    <TableCell align="right" className="table-head">
+                    <TableCell
+                      align="right"
+                      className="table-head"
+                      numeric="true"
+                    >
                       <Box
                         style={{
                           textAlign: 'right',
@@ -178,7 +164,8 @@ const Leaderboard = () => {
                     rank="1"
                     name="Ben"
                     email="ben12@xyz.com"
-                    credits="-50"
+                    credits="-5.3"
+                    currentUser={user}
                   />
                 </TableBody>
               </Table>
@@ -202,18 +189,53 @@ const Leaderboard = () => {
 }
 
 const FriendItem = (props) => {
-  const options = ['Profile', 'Donate credit', 'Ask for donation']
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const open = Boolean(anchorEl)
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
   const isDeficit = props.credits < 0
+  const currentUserDeficit = props.currentUser.carbonCredit < 0
+  const [giftModalOpen, setGiftModalOpen] = useState(false)
+  const [amt, _setAmt] = useState(0)
+  const setAmt = (newAmt) => {
+    _setAmt(Math.max(0, Math.min(props.currentUser.carbonCredit, newAmt)))
+  }
+  const pctAmt =
+    props.currentUser.carbonCredit != 0
+      ? 100 * (amt / props.currentUser.carbonCredit)
+      : 0
+  const setPctAmt = (newPct) =>
+    setAmt((props.currentUser.carbonCredit * newPct) / 100)
   return (
     <>
+      <ActionModal open={giftModalOpen} onClose={() => setGiftModalOpen(false)}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Gift Carbon Credits
+        </Typography>
+        <TextField
+          value={amt}
+          onChange={(event) => setAmt(parseFloat(event.target.value))}
+          label="Amount"
+          type="number"
+          fullWidth
+        />
+        <Slider
+          size="small"
+          aria-label="pct-amt"
+          step={25}
+          marks={[
+            { value: 0, label: '0%' },
+            { value: 25, label: '25%' },
+            { value: 50, label: '50%' },
+            { value: 75, label: '75%' },
+            { value: 100, label: '100%' },
+          ]}
+          donate
+          onChange={(_, newVal) => setPctAmt(newVal)}
+          value={pctAmt}
+          getAriaValueText={(value) => `${value}%`}
+          valueLabelDisplay="off"
+        />
+        <Button variant="contained" color="success" fullWidth disabled={!amt}>
+          Transfer Credits
+        </Button>
+      </ActionModal>
       <TableRow key="1" sx={{ borderBottom: 0 }}>
         <TableCell component="th" scope="row">
           <Avatar sx={{ width: 36, height: 36 }}>#{props.rank}</Avatar>
@@ -225,16 +247,24 @@ const FriendItem = (props) => {
             color: props.credits <= 0 ? '#ff5252' : '#00c853',
             fontWeight: 700,
           }}
-          numeric
         >
           {props.credits}
-          {isDeficit ? (
+          {isDeficit && !currentUserDeficit ? (
             <Button
               size="small"
               color="success"
               startIcon={<Icon>volunteer_activism</Icon>}
               variant="contained"
               sx={{ ml: 1 }}
+              onClick={() => {
+                setAmt(
+                  Math.min(
+                    Math.abs(props.credits),
+                    props.currentUser.carbonCredit
+                  )
+                )
+                setGiftModalOpen(true)
+              }}
             >
               Gift
             </Button>
@@ -301,14 +331,23 @@ const ActionIconMenu = (props) => {
           </ListItemIcon>
           <ListItemText>View Profile</ListItemText>
         </MenuItem>
-        {props.isDeficit ? (
-          <MenuItem>
-            <ListItemIcon>Gift</ListItemIcon>
-          </MenuItem>
-        ) : null}
       </Menu>
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  const { cookies } = context.req
+  const token = cookies && cookies[AUTH_TOKEN_KEY]
+  if (token) {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/userToken?token=${token}`
+    )
+    return { props: { user: res.data } }
+  }
+  return {
+    props: {},
+  }
 }
 
 export default Leaderboard
