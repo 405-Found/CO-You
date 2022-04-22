@@ -211,7 +211,41 @@ boldGreen{
 }
 
 /* Page-content */
-
+/* User home page */
+.home-circle-container{
+    height: 230px;
+  width: 230px;
+  /* background-color:white; */
+  border-radius: 50%;
+  position: absolute;
+  top:166px;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+.home-circle-background{
+    height: 262px;
+  width: 262px;
+  background-color: #b9f6ca;
+  border-radius: 50%;
+  position: absolute;
+  top:150px;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  z-index: -1;
+  margin-right: auto; 
+}
+.home-circle-subtitle{
+    font-size:16px;
+    font-weight:700;
+    margin-top: 70px;
+}
+.home-circle-title{
+    font-size:40px;
+    font-weight:700
+}
 /* Activity-record*/
 .activity-time{
     font-size: 60px;
