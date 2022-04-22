@@ -92,8 +92,27 @@
 
 }
 
-.btn-primary:hover{
-    
+.btn-rounded{
+
+    width: 80px;
+    height: 80px;
+    font-size: 50px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: 0.2s;
+    transform: translate(-50%,0);
+    box-shadow:none !important;
+}
+.btn-navigation-back{
+    width: 80px;
+    height: 80px;
+    margin-right: 10px !important;
+    font-size: 50px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: 0.2s;
+    transform: translate(-50%,0);
+    box-shadow:none !important;
 }
 /* Forms */
 .app-input{
