@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import pandas as pd
 import requests
+import urllib
+import time
 
 d = {"activityItem": {
             "type": "Car",
@@ -17,13 +19,21 @@ d = {"activityItem": {
             "distance": 3000.0,
             "carbonAmount": 9.0
         }
-     }
-car = [5000]
+     } #placeholder - will replace with either api or json file
+car = [0]
 bus = [0]
-train = [20]
-home  = [144]
+train = [0]
+home  = [0]
 flight = []
-motorbike = [2000]
+motorbike = [0]
+
+import webbrowser
+ip = '127.0.0.1'
+link = f"https://{ip}:3000/user/activity-record"
+#link = 'https://api.github.com/users/Aarushi1104'
+url = urllib.request.urlopen(link)
+data = requests.get(link).json()
+requests.post(link, data)
 
 for i in d:
     if d[i]['type'] == 'Bus':
@@ -41,8 +51,7 @@ for i in d:
 
 
 
-
-driver = webdriver.Chrome(r"C:\Users\Aarushi\Downloads\chromedriver_win32\chromedriver.exe")
+driver = webdriver.Chrome(r"chromedriver_win32\chromedriver.exe")
 driver.get('https://www.carbonfootprint.com/calculator.aspx')
 
 f = open("input_sel.json")
@@ -50,7 +59,7 @@ f = open("input_sel.json")
 def click(e_id):
     driver.find_element_by_id(e_id).click()
 def Cclick(classname):
-        driver.find_element_by_class_name(classname).click()
+    driver.find_element_by_class_name(classname).click()
 
 
 frame_0 = driver.find_element_by_id('cphContent_ifrCalc')
@@ -65,7 +74,7 @@ driver.find_element_by_id('btnNextTab').click()
 
 #house
 cell_id = {"Electricity usage in KWH: " : "ctl05_chsHouse_txtElecUsage",
-           "Natuural gas KWH: " : "ctl05_chsHouse_txtGasUsage",
+           "Natural gas KWH: " : "ctl05_chsHouse_txtGasUsage",
            "Heating oil (L) : " : "ctl05_chsHouse_txtOilUsage",
            "Coal (KG / 1000) : " : "ctl05_chsHouse_txtCoalUsage",
            "LPG (L) : " : "ctl05_chsHouse_txtLpgUsage",
@@ -73,7 +82,6 @@ cell_id = {"Electricity usage in KWH: " : "ctl05_chsHouse_txtElecUsage",
            "Wood pellets (KG / 1000): " : "ctl05_chsHouse_txtWoodUsage"}
 for i in cell_id:
     into = driver.find_element_by_id(cell_id[i])
-    consumption = "0" #input(i)
     into.send_keys(str(sum(home)))
     break;
 Cclick("calcbutton")
@@ -91,9 +99,8 @@ while yn.lower()[0] == 'y' and count < 3:
     loc = 'blr'#input("Landing airport code: ")
     select = (driver.find_element_by_id(r"ctl05_rcbAirportTo_Input"))
     select.send_keys(loc + "\n")
-    Cclick("calcbutton")
-    Cclick("calcbutton")
-    Cclick("calcbutton")
+    driver.find_element_by_class_name("calcbutton").submit()
+    
 
     yn = 'n'#input("more?")
 click('btnNextTab')
@@ -132,6 +139,7 @@ click('btnNextTab')
 driver.find_element_by_id('btnNextTab').click()
 result = driver.find_element_by_id("ctl05_csyResults_lblTotal").text.split(" = ")[-1].split(" ")[0]
 print(result)
+requests.post(url, json = "")
 from time import sleep
 sleep(10)
 
