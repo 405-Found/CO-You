@@ -10,7 +10,7 @@ driver.get('https://www.carbonfootprint.com/calculator.aspx')
 frame_0 = driver.find_element_by_id('cphContent_ifrCalc')
 driver.switch_to.frame(frame_0)
 select = Select(driver.find_element_by_id(r"ctl05_cczLocation_ddlCountry"))
-country = input("Country: ").upper()
+country = 'INDIA' #input("Country: ").upper()
 country = country[0] + country[1:].lower()
 select.select_by_visible_text(country)
 driver.find_element_by_id('btnNextTab').click()
@@ -30,25 +30,25 @@ for i in cell_id:
 driver.find_element_by_id('btnNextTab').click()
 
 #flights
-yn = input("Taken any flights?")
+yn = 'y'# input("Taken any flights?")
 count = 0
 while yn.lower()[0] == 'y' and count < 3:
     select = (driver.find_element_by_id(r"ctl05_rcbAirportFrom_Input"))
     count += 1
-    oneway = input("One way? (y/n)")
+    oneway = 'y' #input("One way? (y/n)")
     if oneway.lower()[0] == 'y':
         driver.find_element_by_id("ctl05_rbnOneWay").click()
-    loc = input("Takeoff airport code: ")
+    loc = 'ixr'# input("Takeoff airport code: ")
     select.send_keys(loc + "\n")
-    loc = input("Landing airport code: ")
+    loc = 'blr'#input("Landing airport code: ")
     select = (driver.find_element_by_id(r"ctl05_rcbAirportTo_Input"))
     select.send_keys(loc + "\n")
     driver.find_element_by_class_name("calcbutton").click()
-    yn = input("more?")
+    yn = 'n'#input("more?")
 driver.find_element_by_id('btnNextTab').click()
 
 #car
-km = input("by car: ")
+km = '50'#input("by car: ")
 into = driver.find_element_by_id("ctl05_cdsCar_txtMileage")
 into.send_keys(km)
 select = (driver.find_element_by_id("ctl05_cefCar_txtEfficiency"))
@@ -57,3 +57,37 @@ select = Select(driver.find_element_by_id("ctl05_cefCar_ddlEfficiencyUnit"))
 select.select_by_visible_text("g/km")
 driver.find_element_by_class_name("calcbutton").click()
 driver.find_element_by_id('btnNextTab').click()
+
+#motorbike ctl05_cdsMotorbike_txtMileage
+km = '500'#input("by motorbike: ")
+into = driver.find_element_by_id("ctl05_cdsMotorbike_txtMileage")
+into.send_keys(km)
+select = (driver.find_element_by_id("ctl05_ddlMotorbikeDerivative"))
+select.send_keys('100.9')
+select = Select(driver.find_element_by_id("ctl05_cefMotorbike_ddlEfficiencyUnit"))
+select.select_by_visible_text("g/km")
+driver.find_element_by_class_name("calcbutton").click()
+driver.find_element_by_id('btnNextTab').click()
+
+#bus, and long distance train
+into = driver.find_element_by_id("ctl05_cdsBus_txtMileage")
+km = '100'#input("By bus: ")
+into.send_keys(km)
+into = driver.find_element_by_id("ctl05_cdsIntRail_txtMileage")
+km = '100'#input("By train: ")
+into.send_keys(km)
+into.send_keys(km)
+driver.find_element_by_class_name("calcbutton").click()
+driver.find_element_by_id('btnNextTab').click()
+
+
+driver.find_element_by_id('btnNextTab').click()
+print(driver.find_element_by_id("ctl05_csyResults_lblTotal")
+.text)
+driver.close()
+
+
+
+
+
+
