@@ -11,6 +11,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormHelperText,
+  Divider,
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
@@ -92,7 +94,7 @@ const Index = () => {
           paused={false}
           options={{
             height: 80,
-            amplitude: 10,
+            amplitude: 20,
             speed: 0.15,
             points: 3,
           }}
@@ -147,11 +149,20 @@ const Index = () => {
             <ListItemText>Start recording</ListItemText>
           </ListItemButton>
         </List>
-        <Box mt={2}>
-          <Typography variant="overline">My Charity</Typography>
+        <Box
+          mt={2}
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: '1fr auto 1fr' },
+            alignItems: 'center',
+          }}
+        >
           <Box>
+            <Typography variant="overline">My Charity</Typography>
             <FormControl fullWidth>
-              <InputLabel id="charity-label">Charity</InputLabel>
+              <InputLabel id="charity-label" sx={{ bgcolor: '#FFF' }}>
+                Charity
+              </InputLabel>
               <Select labelId="charity-label" id="charity-select">
                 {CHARITIES.map(({ name }) => (
                   <MenuItem key={name} value={name}>
@@ -159,7 +170,20 @@ const Index = () => {
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText>
+                The charity your affiliated company will donate to
+              </FormHelperText>
             </FormControl>
+          </Box>
+          <Divider>Or</Divider>
+          <Box>
+            <Button
+              variant="contained"
+              onClick={() => router.push('/charities')}
+            >
+              Donate
+            </Button>{' '}
+            to earn credits
           </Box>
         </Box>
       </Container>
