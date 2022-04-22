@@ -65,12 +65,12 @@ const signUpName = ({ email }) => {
               color="text.secondary"
               gutterBottom
             >
-              What is your name?
+              Set up your account
             </Typography>
             <Card sx={{ minWidth: 275 }} className="card-primary">
               <CardContent>
-                <Stack spacing={2}>
-                  <form onSubmit={onSubmit}>
+                <form onSubmit={onSubmit}>
+                  <Stack spacing={2}>
                     <TextField
                       hiddenLabel
                       id="filled-hidden-label-normal"
@@ -97,8 +97,8 @@ const signUpName = ({ email }) => {
                     >
                       Next
                     </Button>
-                  </form>
-                </Stack>
+                  </Stack>
+                </form>
               </CardContent>
             </Card>
           </Stack>
