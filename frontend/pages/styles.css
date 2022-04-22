@@ -2,6 +2,14 @@
 .css-1ptx2yq-MuiInputBase-root-MuiInput-root:after, .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root:after {
     border-bottom: 2px solid #00c853;
   }
+/* Clickable */
+.clickable *{
+    cursor: grab !important;
+    transition: all 0.2s !important;
+}
+.clickable:hover{
+    opacity: 0.8;
+}
 /* Cards */
 .card-primary{
     background-color: rgb(236, 247, 236);
