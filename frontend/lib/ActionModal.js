@@ -22,6 +22,8 @@ const ActionModal = ({ open, onClose, children }) => {
         width={['calc(100% - 32px)', '100%']}
         p={4}
         borderRadius={1}
+        display="flex"
+        flexDirection="column"
       >
         <IconButton
           onClick={onClose}

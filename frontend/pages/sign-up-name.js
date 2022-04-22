@@ -30,7 +30,7 @@ const signUpName = ({ email }) => {
       `/api/user/register`,
       {
         email,
-        name: uname,
+        userName: uname,
         pwd,
       },
       {
