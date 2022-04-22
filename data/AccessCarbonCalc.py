@@ -6,7 +6,43 @@ from selenium.webdriver.support.ui import Select
 import pandas as pd
 import requests
 
-driver = webdriver.Chrome(r"\chromedriver_win32\chromedriver.exe")
+d = {"activityItem": {
+            "type": "Bus",
+            "subtype": None,
+            "departurePos": None,
+            "arrivalPos": None,
+            "start": "2022-04-22T01:36:35Z",
+            "end": "2022-04-22T01:36:35Z",
+            "duration": 3.0,
+            "distance": 3000.0,
+            "carbonAmount": 9.0
+        }
+     }
+car = []
+bus = []
+train = []
+home  = []
+flight = []
+motorbike = []
+
+for i in d:
+    if d[i]['type'] == 'Bus':
+        bus.append(int(d[i]['distance']))
+    elif d[i]['type'] == 'Car':
+        car.append(int(d[i]['distance']))
+    elif d[i]['type'] == 'Train':
+        train.append(int(d[i]['distance']))
+    elif d[i]['type'] == 'Flight':
+        flight.append(int(d[i]['distance']))
+    elif d[i]['type'] == 'Motorbike':
+        motorbike.append(int(d[i]['distance']))
+    else:
+        home.append(int(d[i]['distance']))
+
+
+
+
+driver = webdriver.Chrome(r"C:\Users\Aarushi\Downloads\chromedriver_win32\chromedriver.exe")
 driver.get('https://www.carbonfootprint.com/calculator.aspx')
 
 f = open("input_sel.json")
@@ -22,7 +58,7 @@ driver.switch_to.frame(frame_0)
 
 #select country
 select = Select(driver.find_element_by_id(r"ctl05_cczLocation_ddlCountry"))
-country = "INDIA" #input("Country: ").upper()
+country = "AUSTRALIA" #input("Country: ").upper()
 country = country[0] + country[1:].lower()
 select.select_by_visible_text(country)
 driver.find_element_by_id('btnNextTab').click()
@@ -38,7 +74,7 @@ cell_id = {"Electricity usage in KWH: " : "ctl05_chsHouse_txtElecUsage",
 for i in cell_id:
     into = driver.find_element_by_id(cell_id[i])
     consumption = "0" #input(i)
-    into.send_keys(consumption)
+    into.send_keys(str(sum(home)))
 Cclick("calcbutton")
 click('btnNextTab')
 
@@ -62,9 +98,8 @@ click('btnNextTab')
 
 
 #car
-km = '0'#input("by car: ")
 into = driver.find_element_by_id("ctl05_cdsCar_txtMileage")
-into.send_keys(km)
+into.send_keys(str(sum(car)))
 select = (driver.find_element_by_id("ctl05_cefCar_txtEfficiency"))
 select.send_keys('171.48')
 select = Select(driver.find_element_by_id("ctl05_cefCar_ddlEfficiencyUnit"))
@@ -75,7 +110,7 @@ click('btnNextTab')
 #motorbike ctl05_cdsMotorbike_txtMileage
 km = '0'#input("by motorbike: ")
 into = driver.find_element_by_id("ctl05_cdsMotorbike_txtMileage")
-into.send_keys(km)
+into.send_keys(str(sum(motorbike)))
 select = (driver.find_element_by_id("ctl05_ddlMotorbikeDerivative"))
 select.send_keys('100.9')
 select = Select(driver.find_element_by_id("ctl05_cefMotorbike_ddlEfficiencyUnit"))
@@ -85,11 +120,9 @@ click('btnNextTab')
 
 #bus, and long distance train
 into = driver.find_element_by_id("ctl05_cdsBus_txtMileage")
-km = '1000'#input("By bus: ")
-into.send_keys(km)
+into.send_keys(str(sum(bus)))
 into = driver.find_element_by_id("ctl05_cdsIntRail_txtMileage")
-km = '0'#input("By train: ")
-into.send_keys(km)
+into.send_keys(str(sum(train)))
 Cclick("calcbutton")
 click('btnNextTab')
 
@@ -97,7 +130,9 @@ click('btnNextTab')
 driver.find_element_by_id('btnNextTab').click()
 result = driver.find_element_by_id("ctl05_csyResults_lblTotal").text.split(" = ")[-1].split(" ")[0]
 print(result)
-site = ''
+from time import sleep
+sleep(10)
+
 #requests.post(site,
 #              json={"result" : result})
 
@@ -105,7 +140,7 @@ site = ''
 driver.find_element_by_id('ctl05_csyResults_hylTotalToOffset').click()
 choice = "Global Portfolio"
 driver.find_element_by_id("cphContent_btnCEF").click()
-name = "ishi"
+name = "username"
 driver.find_element_by_id("cphContent_txtName").send_keys(name)
 click("cphContent_btnAdd")
 click("cphContent_btnCheckout")
@@ -116,12 +151,7 @@ click("cphContent_lgvLogin_btnLogin")
 click("cphContent_btnPlaceOrder")
 click("cphContent_btnStripe")
 
-#user does payment
-import time
-time.sleep()
-driver.close()
-
-
+#do payment
 
 
 
