@@ -103,7 +103,7 @@ const Index = ({ user, activities }) => {
                 lineHeight: 1,
               }}
             >
-              {parseFloat(user.currentStatus?.curCarbonEmission).toFixed(2)}
+              {parseFloat(user.carbonCredit).toFixed(2)}
             </Typography>
             <Typography
               color="#FFF"
