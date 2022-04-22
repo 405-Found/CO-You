@@ -11,12 +11,22 @@ import Header from '../components/Header'
 import { DEFAULT_GOAL_PCT } from '../lib/constants'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
+import axios from 'axios'
+import { getToken } from '../lib/useAuth'
 
 const SetGoal = ({ topLine }) => {
   const router = useRouter()
   const [goalPct, setGoalPct] = useState(DEFAULT_GOAL_PCT)
-
-  const onClick = () => {
+  const creditsPerDay = (topLine * (goalPct / 100)).toFixed(2)
+  const onClick = async () => {
+    const res = await axios.post(
+      `/api/user/setGoal?token=${getToken()}&goal=${creditsPerDay}`,
+      {},
+      {
+        withCredentials: false,
+      }
+    )
+    console.log(res.data)
     router.push('/')
   }
 
@@ -53,7 +63,7 @@ const SetGoal = ({ topLine }) => {
         <Typography>
           So, you will get
           <Box as="span" sx={{ fontFamily: 'monospace', fontSize: 40, mx: 1 }}>
-            {(topLine * (goalPct / 100)).toFixed(2)}
+            {creditsPerDay}
           </Box>
           additional carbon credits every day, where 1 carbon credit is
           equivalent to 1 kg of CO<sup>2</sup>.

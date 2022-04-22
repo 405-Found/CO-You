@@ -5,8 +5,16 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import BackButton from './BackButton'
+import { Icon, IconButton } from '@mui/material'
+import { useRouter } from 'next/router'
 
-export default function Header({ showBackButton, isFixed, isTransparent }) {
+export default function Header({
+  showBackButton,
+  isFixed,
+  isTransparent,
+  user,
+}) {
+  const router = useRouter()
   return (
     <AppBar
       position={isFixed ? 'fixed' : 'static'}
@@ -42,6 +50,14 @@ export default function Header({ showBackButton, isFixed, isTransparent }) {
           >
             Logout
           </Button> */}
+          {user && (
+            <IconButton
+              sx={{ ...(isTransparent && { color: '#FFF' }) }}
+              onClick={() => router.push(`/profile?email=${user.email}`)}
+            >
+              <Icon>person</Icon>
+            </IconButton>
+          )}
         </Box>
       </Toolbar>
     </AppBar>
@@ -52,4 +68,5 @@ Header.defaultProps = {
   showBackButton: false,
   isFixed: false,
   isTransparent: false,
+  user: null,
 }
