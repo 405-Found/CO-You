@@ -2,6 +2,11 @@
 .css-1ptx2yq-MuiInputBase-root-MuiInput-root:after, .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root:after {
     border-bottom: 2px solid #00c853;
   }
+
+  /* Slider colour */
+  /* .css-187mznn-MuiSlider-root {
+      color: #00c853 !important;
+  } */
 /* Clickable */
 .clickable *{
     cursor: grab !important;

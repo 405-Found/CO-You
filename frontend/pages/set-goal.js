@@ -6,6 +6,8 @@ import {
   Slider,
   Stack,
   Typography,
+  Card,
+  CardContent,
 } from '@mui/material'
 import Header from '../components/Header'
 import { DEFAULT_GOAL_PCT } from '../lib/constants'
@@ -13,6 +15,8 @@ import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { getToken } from '../lib/useAuth'
+
+import carbon2trees from '../lib/carbon2trees'
 
 const SetGoal = ({ topLine }) => {
   const router = useRouter()
@@ -32,52 +36,73 @@ const SetGoal = ({ topLine }) => {
 
   return (
     <>
-      <Header showBackButton />
-      <Container>
-        <Typography variant="h4" sx={{ marginY: 2 }}>
-          Let's work on decreasing your CO<sup>2</sup> emissions
-        </Typography>
-        <Typography>
-          We estimate that you currently emit{' '}
-          <Box as="span" sx={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
-            {topLine}
-          </Box>{' '}
-          kg CO<sup>2</sup> every day. What percentage of your current daily CO
-          <sup>2</sup> emissions is your new target?
-        </Typography>
-        <Stack spacing={2} direction="row" sx={{ my: 2 }} alignItems="center">
-          <Icon>mood</Icon>
-          <Slider
-            aria-label="pct-goal"
-            step={10}
-            min={10}
-            max={100}
-            marks
-            value={goalPct}
-            onChange={(_, newVal) => setGoalPct(newVal)}
-            getAriaValueText={(value) => `${value}%`}
-            valueLabelDisplay="on"
-          />
-          <Icon>mood_bad</Icon>
-        </Stack>
-        <Typography>
-          So, you will get
-          <Box as="span" sx={{ fontFamily: 'monospace', fontSize: 40, mx: 1 }}>
-            {creditsPerDay}
+      <Box className="app-frame" sx={{}}>
+        <Header />
+        <Container className="app-container">
+          <Box className="app-box">
+            <Stack spacing={0}>
+              <Typography variant="h4" className="page-title" color="#e53935">
+                Lets make some changes
+              </Typography>
+
+              <Card
+                sx={{ minWidth: 275, color: '#00692c' }}
+                className="card-primary"
+              >
+                <CardContent>
+                  <Stack spacing={2}>
+                    <Typography variant="subtitle">
+                      I would remain my current lifestyle by
+                    </Typography>
+                    <Stack
+                      spacing={2}
+                      direction="row"
+                      sx={{ my: 2 }}
+                      alignItems="center"
+                    >
+                      <Icon>mood</Icon>
+                      <Slider
+                        aria-label="pct-goal"
+                        step={10}
+                        min={10}
+                        max={100}
+                        marks
+                        value={goalPct}
+                        onChange={(_, newVal) => setGoalPct(newVal)}
+                        getAriaValueText={(value) => `${value}%`}
+                        valueLabelFormat={(value) => `${value}%`}
+                        valueLabelDisplay="on"
+                      />
+                      <Icon>mood_bad</Icon>
+                    </Stack>
+                    <Typography variant="subtitle">
+                      Emission reduced to <boldGreen>{creditsPerDay}</boldGreen>{' '}
+                      kg
+                    </Typography>
+                    <Typography variant="subtitle">
+                      Saving{' '}
+                      <boldGreen>
+                        {carbon2trees(
+                          (topLine - creditsPerDay) * 365
+                        ).toFixed()}
+                      </boldGreen>{' '}
+                      trees every day
+                    </Typography>
+
+                    <Button
+                      className="btn-primary"
+                      sx={{ maxWidth: '200px', textAlign: 'center' }}
+                      onClick={onClick}
+                    >
+                      Next
+                    </Button>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Stack>
           </Box>
-          additional carbon credits every day, where 1 carbon credit is
-          equivalent to 1 kg of CO<sup>2</sup>.
-        </Typography>
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{ mt: 2 }}
-          className="btn-primary"
-          onClick={onClick}
-        >
-          Sounds good!
-        </Button>
-      </Container>
+        </Container>
+      </Box>
     </>
   )
 }

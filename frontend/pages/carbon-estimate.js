@@ -25,7 +25,7 @@ const CarbonEstimate = ({ estimate }) => {
     })
   }
 
-  const nTrees = carbon2trees(estimate * 365)
+  const nTrees = carbon2trees(estimate)
 
   return (
     <>
@@ -53,7 +53,7 @@ const CarbonEstimate = ({ estimate }) => {
                     <Typography variant="subtitle">
                       It is the same amount of{' '}
                       <boldGreen>{nTrees.toFixed(2)}</boldGreen> trees offset
-                      every day
+                      every day!
                     </Typography>
                     <Box
                       sx={{
