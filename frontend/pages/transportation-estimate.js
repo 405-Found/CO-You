@@ -23,7 +23,11 @@ const TransportationType = ({ typeName, onChange, value }) => (
         alignItems: 'center',
       }}
     >
-      <TextField onChange={onChange(typeName)} value={value[typeName]} />
+      <TextField
+        type="number"
+        onChange={onChange(typeName)}
+        value={value[typeName]}
+      />
       <Typography variant="subtitle">hours</Typography>
     </Box>
   </ListItem>
@@ -38,11 +42,9 @@ const TransportationEstimate = () => {
   )
 
   const handleChange = (typeName) => (event) => {
-    if (event.target.value.match(/^\d+$/) || event.target.value.match(/^$/)) {
-      const newHourData = { ...hourData }
-      newHourData[typeName] = event.target.value
-      setHourData(newHourData)
-    }
+    const newHourData = { ...hourData }
+    newHourData[typeName] = event.target.value
+    setHourData(newHourData)
   }
 
   const submitHourData = async () => {
