@@ -19,8 +19,10 @@ import Wave from 'react-wavify'
 import { PieChart } from 'react-minimal-pie-chart'
 import stc from 'string-to-color'
 import typeToColor from '../lib/typeToColor'
+import { AUTH_TOKEN_KEY } from '../lib/constants'
 
-const Profile = ({ user }) => {
+const Profile = ({ user, me, tip }) => {
+  const isUserMe = user.userID === me.userID
   const router = useRouter()
   useAuth(router)
 
@@ -108,18 +110,20 @@ const Profile = ({ user }) => {
           <Typography variant="h3" fontWeight={500} sx={{ my: 2, mb: 4 }}>
             {user?.email}
           </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<Icon>person_add</Icon>}
-            sx={{
-              textTransform: 'none',
-              fontWeight: 500,
-              fontSize: 18,
-            }}
-          >
-            Add Friend
-          </Button>
+          {!isUserMe ? (
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<Icon>person_add</Icon>}
+              sx={{
+                textTransform: 'none',
+                fontWeight: 500,
+                fontSize: 18,
+              }}
+            >
+              Add Friend
+            </Button>
+          ) : null}
         </Container>
       </Box>
       <Box flex={1} display="flex" flexDirection="column">
@@ -143,10 +147,15 @@ const Profile = ({ user }) => {
             }}
           >
             <Box>
-              <Typography variant="overline" color="#fff" fontSize={14}>
+              <Typography
+                variant="overline"
+                color="rgba(255,255,255,0.75)"
+                fontSize={14}
+              >
                 {user?.email}'s Carbon Credits
               </Typography>
               <Typography
+                gutterBottom
                 sx={{
                   fontFamily: 'monospace',
                   fontSize: 80,
@@ -155,6 +164,16 @@ const Profile = ({ user }) => {
                 }}
               >
                 {parseFloat(user?.carbonCredit, 2).toFixed(2)}
+              </Typography>
+              <Typography
+                fontSize={[12, 14]}
+                color="rgba(255,255,255,0.75)"
+                variant="overline"
+              >
+                Tip: {tip.catagory}
+              </Typography>
+              <Typography color="rgba(255,255,255,0.75)" fontSize={[14, 18]}>
+                {tip.content}
               </Typography>
             </Box>
             <Paper
@@ -176,7 +195,7 @@ const Profile = ({ user }) => {
               </Typography>
               <Box sx={{ position: 'relative', mt: 4 }}>
                 <Typography
-                  fontSize={[40, 50]}
+                  fontSize={[30, 50]}
                   sx={{
                     position: 'absolute',
                     top: '50%',
@@ -192,7 +211,7 @@ const Profile = ({ user }) => {
                 </Typography>
                 <PieChart
                   data={pieData}
-                  lineWidth={40}
+                  lineWidth={60}
                   segmentsStyle={{ transition: 'stroke .3s' }}
                   animate
                   label={({ dataIndex, dataEntry }) =>
@@ -200,9 +219,9 @@ const Profile = ({ user }) => {
                       dataEntry.percentage
                     )}%`
                   }
-                  labelPosition={80}
+                  labelPosition={70}
                   labelStyle={{
-                    fontSize: '4px',
+                    fontSize: '3.5px',
                     fill: '#fff',
                     pointerEvents: 'none',
                   }}
@@ -222,10 +241,19 @@ export async function getServerSideProps(context) {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/user?email=${email}`
     )
-    return {
-      props: {
-        user: res.data || null,
-      },
+    const { cookies } = context.req
+    if (cookies && cookies[AUTH_TOKEN_KEY]) {
+      const res2 = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/userToken?token=${cookies[AUTH_TOKEN_KEY]}`
+      )
+      const res3 = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tip`)
+      return {
+        props: {
+          user: res.data || null,
+          me: res2.data || null,
+          tip: res3.data || null,
+        },
+      }
     }
   }
   return {
