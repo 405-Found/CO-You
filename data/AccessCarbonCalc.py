@@ -7,7 +7,7 @@ import pandas as pd
 import requests
 
 d = {"activityItem": {
-            "type": "Bus",
+            "type": "Car",
             "subtype": None,
             "departurePos": None,
             "arrivalPos": None,
@@ -18,12 +18,12 @@ d = {"activityItem": {
             "carbonAmount": 9.0
         }
      }
-car = []
-bus = []
-train = []
-home  = []
+car = [5000]
+bus = [0]
+train = [20]
+home  = [144]
 flight = []
-motorbike = []
+motorbike = [2000]
 
 for i in d:
     if d[i]['type'] == 'Bus':
@@ -33,7 +33,7 @@ for i in d:
     elif d[i]['type'] == 'Train':
         train.append(int(d[i]['distance']))
     elif d[i]['type'] == 'Flight':
-        flight.append(int(d[i]['distance']))
+        flight.append((d[i]['departurePos'], d[i]['arrivalPos']))
     elif d[i]['type'] == 'Motorbike':
         motorbike.append(int(d[i]['distance']))
     else:
@@ -75,24 +75,26 @@ for i in cell_id:
     into = driver.find_element_by_id(cell_id[i])
     consumption = "0" #input(i)
     into.send_keys(str(sum(home)))
+    break;
 Cclick("calcbutton")
 click('btnNextTab')
 
 #flights
-yn = 'n'#input("Taken any flights?")
+yn = 'y'#input("Taken any flights?")
 count = 0
 while yn.lower()[0] == 'y' and count < 3:
     select = (driver.find_element_by_id(r"ctl05_rcbAirportFrom_Input"))
     count += 1
-    oneway = 'n'#input("One way? (y/n)")
-    if oneway.lower()[0] == 'y':
-        driver.find_element_by_id("ctl05_rbnOneWay").click()
+    driver.find_element_by_id("ctl05_rbnOneWay").click()
     loc = 'ixr'#input("Takeoff airport code: ")
     select.send_keys(loc + "\n")
     loc = 'blr'#input("Landing airport code: ")
     select = (driver.find_element_by_id(r"ctl05_rcbAirportTo_Input"))
     select.send_keys(loc + "\n")
     Cclick("calcbutton")
+    Cclick("calcbutton")
+    Cclick("calcbutton")
+
     yn = 'n'#input("more?")
 click('btnNextTab')
 
@@ -150,8 +152,3 @@ driver.find_element_by_id("cphContent_lgvLogin_txtPassword").send_keys('aaaaaaaa
 click("cphContent_lgvLogin_btnLogin")
 click("cphContent_btnPlaceOrder")
 click("cphContent_btnStripe")
-
-#do payment
-
-
-
