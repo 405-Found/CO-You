@@ -23,6 +23,7 @@ import {
   Stack,
 } from '@mui/material'
 import React from 'react'
+import PropTypes from 'prop-types'
 import Input from '@mui/material/Input'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
@@ -32,6 +33,8 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import DialogTitle from '@mui/material/DialogTitle'
+import Dialog from '@mui/material/Dialog'
 
 import Menu from '@mui/material/Menu'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -52,6 +55,7 @@ import BackButton from '../../components/BackButton'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
 import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
+
 const TODAYS_ACTIVITIES = [
   {
     type: 'CAR',
@@ -241,6 +245,17 @@ const ActionIconMenu = (props) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  // For the dialogue requesting for amount of donation
+  const [openInput, setOpenInput] = React.useState(false)
+
+  const handleInputClick = () => {
+    setOpen(true)
+  }
+
+  const handleInputClose = (value) => {
+    setOpenInput(false)
+    setSelectedValue(value)
+  }
 
   return (
     <div>
@@ -270,7 +285,7 @@ const ActionIconMenu = (props) => {
       >
         <MenuItem>Profile</MenuItem>
         {props.isDeficit ? (
-          <MenuItem>Donate credit</MenuItem>
+          <MenuItem onClick={openInput}>Donate credit</MenuItem>
         ) : (
           <MenuItem>Ask for donation</MenuItem>
         )}
@@ -278,4 +293,5 @@ const ActionIconMenu = (props) => {
     </div>
   )
 }
+
 export default Leaderboard
