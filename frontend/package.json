@@ -14,8 +14,6 @@
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.2",
     "axios": "^0.26.1",
-    "chart.js": "^3.7.1",
-    "chartjs-plugin-labels": "^1.1.0",
     "cookie-cutter": "^0.2.0",
     "d3-color": "^3.1.0",
     "d3-interpolate": "^3.0.1",
