@@ -135,6 +135,7 @@
 .app-container{
     background-color: white ;
     padding-top: 50px;
+    padding-bottom: 50px;
     padding-left: 50px;
 
     padding-right: 50px;
@@ -153,7 +154,7 @@
     }
     .app-container{
         background-color: white ;
-        margin-top:10vh;
+        margin-top:5vh;
         max-width:400px;
         min-height: 500px;
         padding-top: 50px;
@@ -172,6 +173,36 @@
     margin: 0 24px 24px;
     color: #4b4b4b;
     font-weight: 700;
+}
+.page-midtitle {
+    font-size: 30px;
+    margin-left:24px;
+    margin-bottom: 10px;
+    line-height: 20px;
+    font-weight: 700;
+}
+.page-subtitle {
+    font-size: 16px;
+    margin: 0 24px;
+    line-height: 20px;
+    color: rgb(0,0,0,0.5);
+    font-weight: 700;
+}
+.page-subtitle-second {
+    font-size: 14px !important;
+    line-height: 20px!important;
+    color: rgb(0,0,0,0.5) !important;
+    font-weight: 700!important;
+}
+bold{
+
+    color: rgb(0,0,0,0.8) !important;
+    font-weight: 900 !important;
+}
+boldGreen{
+
+    color: #1b5e20 !important;
+    font-weight: 900 !important;
 }
 
 /* Page-content */

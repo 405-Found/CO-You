@@ -1,5 +1,13 @@
 import { useState } from 'react'
-import { Button, ListItemText, TextField, Typography } from '@mui/material'
+import {
+  Button,
+  ListItemText,
+  TextField,
+  Typography,
+  Stack,
+  Card,
+  CardContent,
+} from '@mui/material'
 import Container from '@mui/material/Container'
 import Header from '../components/Header'
 import List from '@mui/material/List'
@@ -63,30 +71,54 @@ const TransportationEstimate = () => {
 
   return (
     <>
-      <Header />
-      <Container>
-        <Typography variant="h4" sx={{ marginY: 2 }}>
-          What transportation do you take everyday?
-        </Typography>
-        <List>
-          {transportationTypes.map((typeName) => (
-            <TransportationType
-              key={typeName}
-              typeName={typeName}
-              onChange={handleChange}
-              value={hourData}
-            />
-          ))}
-        </List>
-        <Button
-          variant="contained"
-          fullWidth
-          onClick={submitHourData}
-          sx={{ mt: 2 }}
-        >
-          Continue
-        </Button>
-      </Container>
+      <Box className="app-frame" sx={{}}>
+        <Header />
+        <Container className="app-container">
+          <Box className="app-box">
+            <Stack spacing={2}>
+              <Typography
+                variant="h4"
+                className="page-title"
+                color="text.secondary"
+                gutterBottom
+              >
+                Set up your account
+              </Typography>
+              <Card sx={{ minWidth: 275 }} className="card-primary">
+                <CardContent>
+                  <Stack spacing={1}>
+                    <Typography
+                      variant="h6"
+                      className="page-subtitle"
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      What transportation do you take everyday?
+                    </Typography>
+                    <List>
+                      {transportationTypes.map((typeName) => (
+                        <TransportationType
+                          key={typeName}
+                          typeName={typeName}
+                          onChange={handleChange}
+                          value={hourData}
+                        />
+                      ))}
+                    </List>
+                    <Button
+                      className="btn-primary"
+                      sx={{ maxWidth: '200px', textAlign: 'center' }}
+                      onClick={submitHourData}
+                    >
+                      Next
+                    </Button>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Stack>
+          </Box>
+        </Container>
+      </Box>
     </>
   )
 }

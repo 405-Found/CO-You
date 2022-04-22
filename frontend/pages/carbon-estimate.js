@@ -1,8 +1,17 @@
-import { Container, Typography, Icon, Button } from '@mui/material'
+import {
+  Container,
+  Typography,
+  Icon,
+  Button,
+  Stack,
+  Card,
+  CardContent,
+} from '@mui/material'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Header from '../components/Header'
 import carbon2trees from '../lib/carbon2trees'
+import ParkIcon from '@mui/icons-material/Park'
 
 const CarbonEstimate = ({ estimate }) => {
   const router = useRouter()
@@ -20,42 +29,57 @@ const CarbonEstimate = ({ estimate }) => {
 
   return (
     <>
-      <Header showBackButton />
-      <Container>
-        <Typography variant="h4" sx={{ marginY: 2 }}>
-          Estimated daily emissions
-        </Typography>
-        <Typography>
-          <Box
-            as="span"
-            sx={{ fontSize: 80, fontFamily: 'monospace', marginRight: 2 }}
-          >
-            {estimate}
+      <Box className="app-frame" sx={{}}>
+        <Header />
+        <Container className="app-container">
+          <Box className="app-box">
+            <Stack spacing={0}>
+              <Typography variant="h4" className="page-subtitle" gutterBottom>
+                Estimated daily emissions
+              </Typography>
+              <Typography variant="h4" className="page-title" color="#e53935">
+                {estimate} kg
+                <Typography className="page-subtitle-second">
+                  Carbon dioxide per day
+                </Typography>
+              </Typography>
+
+              <Card
+                sx={{ minWidth: 275, color: '#00692c' }}
+                className="card-primary"
+              >
+                <CardContent>
+                  <Stack spacing={2}>
+                    <Typography variant="subtitle">
+                      It is the same amount of{' '}
+                      <boldGreen>{nTrees.toFixed(2)}</boldGreen> trees offset
+                      every day
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(8, 1fr)',
+                        mt: 2,
+                      }}
+                    >
+                      {[...Array(Math.floor(nTrees)).keys()].map((i) => (
+                        <ParkIcon key={i} color="#00c853" />
+                      ))}
+                    </Box>
+                    <Button
+                      className="btn-primary"
+                      sx={{ maxWidth: '200px', textAlign: 'center' }}
+                      onClick={onContinue}
+                    >
+                      Next
+                    </Button>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Stack>
           </Box>
-          <Box as="span" sx={{ fontSize: 20 }}>
-            kg CO<sup>2</sup> per day
-          </Box>
-        </Typography>
-        <Typography variant="subtitle">
-          That's the same amount of CO<sup>2</sup> that {nTrees.toFixed(2)}{' '}
-          trees offset every year
-        </Typography>
-        <Box
-          sx={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', mt: 2 }}
-        >
-          {[...Array(Math.floor(nTrees)).keys()].map((i) => (
-            <Icon key={i}>park</Icon>
-          ))}
-        </Box>
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{ mt: 2 }}
-          onClick={onContinue}
-        >
-          Continue
-        </Button>
-      </Container>
+        </Container>
+      </Box>
     </>
   )
 }
