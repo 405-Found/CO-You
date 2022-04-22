@@ -15,6 +15,7 @@ import useAuth from '../lib/useAuth'
 import { Box } from '@mui/system'
 import Wave from 'react-wavify'
 import { PieChart } from 'react-minimal-pie-chart'
+import stc from 'string-to-color'
 
 const CHART_DATA = [
   { title: 'Flight', value: 10, color: 'rgba(255,0,0,0.5)' },
@@ -28,7 +29,17 @@ const Profile = ({ user }) => {
 
   useEffect(() => {
     if (!user) router.push('/')
+    console.log(pieData)
   }, [])
+
+  const pieData = Object.entries(user.currentStatus.shares)
+    .map((data) => ({
+      title: data[0],
+      value: data[1].amount,
+      color: stc(data[0]),
+      pct: data[1].percentage,
+    }))
+    .filter(({ pct }) => pct > 0.01)
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -137,12 +148,12 @@ const Profile = ({ user }) => {
             </Box>
             <Box sx={{ maxWidth: 500, maxHeight: 500 }}>
               <PieChart
-                data={CHART_DATA}
+                data={pieData}
                 lineWidth={60}
                 segmentsStyle={{ transition: 'stroke .3s' }}
                 animate
                 label={({ dataIndex, dataEntry }) =>
-                  `${CHART_DATA[dataIndex].title} ${Math.round(
+                  `${pieData[dataIndex].title} ${Math.round(
                     dataEntry.percentage
                   )}%`
                 }

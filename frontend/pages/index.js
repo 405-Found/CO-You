@@ -14,11 +14,13 @@ import {
   FormHelperText,
   Divider,
 } from '@mui/material'
+import cookie from 'cookie-cutter'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
+import axios from 'axios'
 import Header from '../components/Header'
-import { CHARITIES } from '../lib/constants'
+import { AUTH_TOKEN_KEY, CHARITIES } from '../lib/constants'
 
 const TODAYS_ACTIVITIES = [
   {
@@ -43,8 +45,10 @@ const TYPE_TO_VERB = {
   PLANE: 'Fly',
 }
 
-const Index = () => {
+const Index = ({ user }) => {
   const router = useRouter()
+  if (!user) router.push('/sign-up-role-select')
+
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header isFixed isTransparent />
@@ -77,7 +81,7 @@ const Index = () => {
                 lineHeight: 1,
               }}
             >
-              +12.8
+              {parseFloat(user.carbonCredit).toFixed(2)}
             </Typography>
             <Typography
               color="#FFF"
@@ -163,7 +167,11 @@ const Index = () => {
               <InputLabel id="charity-label" sx={{ bgcolor: '#FFF' }}>
                 Charity
               </InputLabel>
-              <Select labelId="charity-label" id="charity-select">
+              <Select
+                labelId="charity-label"
+                id="charity-select"
+                defaultValue={CHARITIES[0].name}
+              >
                 {CHARITIES.map(({ name }) => (
                   <MenuItem key={name} value={name}>
                     {name}
@@ -189,6 +197,26 @@ const Index = () => {
       </Container>
     </Box>
   )
+}
+
+export async function getServerSideProps(context) {
+  const { cookies } = context.req
+  const token = cookies && cookies[AUTH_TOKEN_KEY]
+  if (token) {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/userToken?token=${token}`
+    )
+    return {
+      props: {
+        user: res.data || null,
+      },
+    }
+  }
+  return {
+    props: {
+      user: null,
+    },
+  }
 }
 
 export default Index
