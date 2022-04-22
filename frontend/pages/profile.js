@@ -53,7 +53,7 @@ const Profile = ({ user, me, tip }) => {
         <Toolbar>
           <Container>
             <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-              <IconButton onClick={() => router.push('/')}>
+              <IconButton onClick={() => router.back()}>
                 <Icon>close</Icon>
               </IconButton>
             </Box>
@@ -165,16 +165,23 @@ const Profile = ({ user, me, tip }) => {
               >
                 {parseFloat(user?.carbonCredit, 2).toFixed(2)}
               </Typography>
-              <Typography
-                fontSize={[12, 14]}
-                color="rgba(255,255,255,0.75)"
-                variant="overline"
-              >
-                Tip: {tip.catagory}
-              </Typography>
-              <Typography color="rgba(255,255,255,0.75)" fontSize={[14, 18]}>
-                {tip.content}
-              </Typography>
+              {isUserMe ? (
+                <>
+                  <Typography
+                    fontSize={[12, 14]}
+                    color="rgba(255,255,255,0.75)"
+                    variant="overline"
+                  >
+                    Tip: {tip.catagory}
+                  </Typography>
+                  <Typography
+                    color="rgba(255,255,255,0.75)"
+                    fontSize={[14, 18]}
+                  >
+                    {tip.content}
+                  </Typography>
+                </>
+              ) : null}
             </Box>
             <Paper
               sx={{
