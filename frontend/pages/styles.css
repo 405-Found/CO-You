@@ -21,7 +21,18 @@
     box-shadow: none !important;
 }
 .card-red{
-    background-color: #ffebee;
+    background-color: #fff5f6;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:10px;
+    padding-bottom:5px;
+
+    border-radius: 15px;
+
+    box-shadow: none !important;
+}
+.card-blue{
+    background-color: #e3f2fd;
     padding-left: 10px;
     padding-right: 10px;
     padding-top:10px;
@@ -192,5 +203,5 @@
 
 /* Report */
 .report-subtitle{
-    
+
 }
