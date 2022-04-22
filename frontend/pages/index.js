@@ -16,6 +16,7 @@ import {
   Dialog,
   DialogTitle,
   ListItem,
+  ListItemAvatar,
 } from '@mui/material'
 import moment from 'moment'
 import { Box } from '@mui/system'
@@ -58,6 +59,11 @@ const VehicleTypeDialog = ({ router, open, setOpen }) => {
               })
             }
           >
+            <ListItemAvatar>
+              <ListItemIcon>
+                <Icon>{typeToIcon(type)}</Icon>
+              </ListItemIcon>
+            </ListItemAvatar>
             <ListItemText primary={type} />
           </ListItem>
         ))}
@@ -149,7 +155,7 @@ const Index = ({ user, activities }) => {
               },
               i
             ) => (
-              <ListItemButton key={`Activity${i}`}>
+              <ListItem key={`Activity${i}`}>
                 <ListItemIcon>
                   <Icon>{typeToIcon(type)}</Icon>
                 </ListItemIcon>
@@ -173,7 +179,7 @@ const Index = ({ user, activities }) => {
                 >
                   -{`${carbonAmount.toFixed(2)} pts`}
                 </Typography>
-              </ListItemButton>
+              </ListItem>
             )
           )}
           <VehicleTypeDialog router={router} open={open} setOpen={setOpen} />

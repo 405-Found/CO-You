@@ -2,12 +2,10 @@ import { Container, Typography, Icon, Button } from '@mui/material'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Header from '../components/Header'
+import carbon2trees from '../lib/carbon2trees'
 
 const CarbonEstimate = ({ estimate }) => {
   const router = useRouter()
-
-  //
-  const N_TREES = 10
 
   const onContinue = () => {
     router.push({
@@ -17,6 +15,8 @@ const CarbonEstimate = ({ estimate }) => {
       },
     })
   }
+
+  const nTrees = carbon2trees(estimate * 365)
 
   return (
     <>
@@ -37,12 +37,13 @@ const CarbonEstimate = ({ estimate }) => {
           </Box>
         </Typography>
         <Typography variant="subtitle">
-          That's the equivalent cutting down {N_TREES} trees every year
+          That's the same amount of CO<sup>2</sup> that {nTrees.toFixed(2)}{' '}
+          trees offset every year
         </Typography>
         <Box
           sx={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', mt: 2 }}
         >
-          {[...Array(N_TREES).keys()].map((i) => (
+          {[...Array(Math.floor(nTrees)).keys()].map((i) => (
             <Icon key={i}>park</Icon>
           ))}
         </Box>
