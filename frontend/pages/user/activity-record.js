@@ -24,6 +24,7 @@ import typeToEmissionLevel from '../../lib/typeToEmissionLevel'
 import typeToSpeed from '../../lib/typeToSpeed'
 import { getToken } from '../../lib/useAuth'
 import { useRouter } from 'next/router'
+import typeToDistCarbonConstant from '../../lib/typeToDistCarbonConstant'
 
 const activityRecord = ({ type }) => {
   const router = useRouter()
@@ -41,8 +42,10 @@ const activityRecord = ({ type }) => {
   const minutes = `${Math.floor(secs / 60)}`
   const getMinutes = `0${minutes % 60}`.slice(-2)
 
+  // function to guess the ~amount of carbon emissions per km of travel
+  const distToCO2 = (d) => d * typeToDistCarbonConstant(type)
   // function to guess the ~amount of carbon emissions per second of travel
-  const secsToCo2 = (s) => s * 0.5
+  const secsToCO2 = (s) => distToCO2(typeToSpeed(type) * s)
 
   const onEnd = async () => {
     const duration = secs / 3600
@@ -90,7 +93,7 @@ const activityRecord = ({ type }) => {
                 component="span"
                 style={{ color: '#4caf50', borderColor: '#4caf50' }}
                 onClick={() => {
-                  if (invl) clearInterval(invl)
+                  // if (invl) clearInterval(invl)
                   onEnd()
                 }}
               >
@@ -112,7 +115,7 @@ const activityRecord = ({ type }) => {
                     Estimated emissions (kg)
                   </Grid>
                   <Grid item xs={2.5} style={{ textAlign: 'right' }}>
-                    {secsToCo2(secs).toFixed(2)}
+                    {secsToCO2(secs).toFixed(2)}
                   </Grid>
                 </Grid>
               </Box>
