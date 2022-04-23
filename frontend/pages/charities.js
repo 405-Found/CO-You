@@ -1,8 +1,8 @@
-import { Box } from '@mui/system'
+import Wave from 'react-wavify'
 import { useEffect, useState } from 'react'
-import Card from '@mui/material/Card'
+import { Box } from '@mui/system'
 import {
-  Container,
+  Button,
   FormControl,
   Icon,
   InputAdornment,
@@ -10,27 +10,24 @@ import {
   OutlinedInput,
   TextField,
   Grid,
+  CardActions,
+  CardContent,
+  Typography,
+  Card,
 } from '@mui/material'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { CHARITIES } from '../lib/constants'
-import Header from '../components/Header'
 import axios from 'axios'
-
-import Wave from 'react-wavify'
-
-import AddIcon from '@mui/icons-material/Add'
+import { useRouter } from 'next/router'
 
 import BackButton from '../components/BackButton'
-import ActionModal from '../lib/ActionModal'
+import Header from '../components/Header'
+import { getToken } from '../lib/useAuth'
+
 const Charities = () => {
   const [donateAmt, setDonateAmt] = useState({})
   const [charities, setCharities] = useState([])
 
   const onChange = (charityName) => (event) => {
+    // only match +ve digits
     if (event.target.value.match(/^\d+$/) || event.target.value.match(/^$/)) {
       const newAmt = { ...donateAmt }
       newAmt[charityName] = event.target.value
@@ -53,6 +50,19 @@ const Charities = () => {
   const onSearch = async (event) => {
     event.preventDefault()
     await fetchCharities()
+  }
+
+  const router = useRouter()
+
+  const onDonate = async (amt) => {
+    if (amt) {
+      await axios.post(
+        `/api/user/donate?token=${getToken()}&amount=${amt}`,
+        undefined,
+        { requireCredentials: false }
+      )
+      router.push('/user')
+    }
   }
 
   return (
@@ -156,70 +166,70 @@ const Charities = () => {
                 scrollBehaviour: 'smooth',
               }}
             >
-              {charities.map(({ id, name, description, moneyPerKilo }) => (
-                <Card
-                  className="card-primary"
-                  key={id}
-                  style={{
-                    marginBottom: '20px',
-                  }}
-                >
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      style={{
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden',
-                        maxHeight: '40px',
-                      }}
-                    >
-                      {description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions sx={{ alignItems: 'stretch' }}>
-                    <FormControl sx={{ flexGrow: 1, mr: 1 }} color="success">
-                      <InputLabel htmlFor="amount-input">Amount</InputLabel>
-                      <OutlinedInput
-                        id="amount-input"
-                        label="Amount"
-                        placeholder="Enter amount"
-                        startAdornment={
-                          <InputAdornment position="start">$</InputAdornment>
-                        }
-                        type="number"
-                        value={donateAmt[name] || ''}
-                        onChange={onChange(name)}
-                      />
-                    </FormControl>
-                    <Button
-                      variant="contained"
-                      className="btn btn-primary"
-                      disabled={!donateAmt[name]}
-                    >
-                      Donate
-                    </Button>
-                  </CardActions>
-                  {!!donateAmt[name] ? (
-                    <CardActions sx={{ pt: 0 }}>
-                      <Typography>
-                        You will receieve{' '}
-                        <Typography variant="monospace">
-                          <strong>
-                            {(
-                              parseFloat(1000 * donateAmt[name]) / moneyPerKilo
-                            ).toFixed(1)}
-                          </strong>
-                        </Typography>{' '}
-                        carbon credits
+              {charities.map(({ id, name, description, moneyPerKilo }) => {
+                const amt = parseFloat(1000 * donateAmt[name]) / moneyPerKilo
+                return (
+                  <Card
+                    className="card-primary"
+                    key={id}
+                    style={{
+                      marginBottom: '20px',
+                    }}
+                  >
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {name}
                       </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        style={{
+                          textOverflow: 'ellipsis',
+                          overflow: 'hidden',
+                          maxHeight: '40px',
+                        }}
+                      >
+                        {description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions sx={{ alignItems: 'stretch' }}>
+                      <FormControl sx={{ flexGrow: 1, mr: 1 }} color="success">
+                        <InputLabel htmlFor="amount-input">Amount</InputLabel>
+                        <OutlinedInput
+                          id="amount-input"
+                          label="Amount"
+                          placeholder="Enter amount"
+                          startAdornment={
+                            <InputAdornment position="start">$</InputAdornment>
+                          }
+                          type="number"
+                          value={donateAmt[name] || ''}
+                          onChange={onChange(name)}
+                        />
+                      </FormControl>
+                      <Button
+                        variant="contained"
+                        className="btn btn-primary"
+                        disabled={!donateAmt[name]}
+                        onClick={() => onDonate(amt)}
+                      >
+                        Donate
+                      </Button>
                     </CardActions>
-                  ) : null}
-                </Card>
-              ))}
+                    {!!donateAmt[name] ? (
+                      <CardActions sx={{ pt: 0 }}>
+                        <Typography>
+                          You will receieve{' '}
+                          <Typography variant="monospace">
+                            <strong>{amt.toFixed(1)}</strong>
+                          </Typography>{' '}
+                          carbon credits
+                        </Typography>
+                      </CardActions>
+                    ) : null}
+                  </Card>
+                )
+              })}
             </Box>
           </Grid>
         </Grid>

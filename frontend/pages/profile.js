@@ -217,7 +217,7 @@ const Profile = ({ user, me, tip }) => {
                 >
                   {totalCo2} kg
                   <br />
-                  CO<sup>2</sup>
+                  CO<sub>2</sub>
                 </Typography>
                 <PieChart
                   data={pieData}

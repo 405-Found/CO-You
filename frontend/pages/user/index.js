@@ -26,11 +26,11 @@ import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import { AUTH_TOKEN_KEY, CHARITIES, VEHICLE_TYPES } from '../../lib/constants'
 import typeToIcon from '../../lib/typeToIcon'
-import ActionModal from '../../lib/ActionModal'
+import ActionModal from '../../components/ActionModal'
 // React gauge
 import { color } from 'd3-color'
 import { interpolateRgb } from 'd3-interpolate'
@@ -83,7 +83,9 @@ const VehicleTypeDialog = ({ router, open, setOpen }) => {
 
 const Index = ({ user, activities }) => {
   const router = useRouter()
-  if (!user) router.push('/sign-up-role-select')
+  useEffect(() => {
+    if (!user) router.push('/sign-up/role-select')
+  }, [])
   const [changeOrgModalOpen, setChangeOrgModalOpen] = useState(false)
 
   const [open, setOpen] = useState(false)

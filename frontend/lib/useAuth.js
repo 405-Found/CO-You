@@ -8,7 +8,7 @@ const useAuth = (router) => {
   useEffect(() => {
     const token = getToken()
     if (!token) {
-      router.push('/sign-up-role-select')
+      router.push('/sign-up/role-select')
     }
   }, [])
 }

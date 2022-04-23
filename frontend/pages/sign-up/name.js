@@ -2,7 +2,7 @@ import { Button, Container } from '@mui/material'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
-import Header from '../components/Header'
+import Header from '../../components/Header'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
@@ -11,12 +11,12 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import cookie from 'cookie-cutter'
-import { AUTH_TOKEN_KEY } from '../lib/constants'
+import { AUTH_TOKEN_KEY } from '../../lib/constants'
 
 const signUpName = ({ email }) => {
   const router = useRouter()
   useEffect(() => {
-    if (!email) router.push('/sign-up-email')
+    if (!email) router.push('/sign-up/email')
   }, [])
 
   const [uname, setUname] = useState('')

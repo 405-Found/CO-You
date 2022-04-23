@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import { minWidth } from '@mui/system'
-import Header from '../components/Header'
+import Header from '../../components/Header'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
@@ -46,7 +46,7 @@ const signUpRoleSelect = () => {
                 <Button
                   className="btn-primary"
                   sx={{ minWidth: '200px' }}
-                  onClick={() => router.push('/sign-up-email')}
+                  onClick={() => router.push('/sign-up/email')}
                 >
                   Choose
                 </Button>
@@ -74,7 +74,7 @@ const signUpRoleSelect = () => {
                 <Button
                   className="btn-yellow"
                   sx={{ minWidth: '200px' }}
-                  onClick={() => router.push('/sign-up-name-company')}
+                  onClick={() => router.push('/sign-up/name-company')}
                 >
                   Choose
                 </Button>

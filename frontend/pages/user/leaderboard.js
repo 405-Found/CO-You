@@ -33,7 +33,7 @@ import { CHARITIES, AUTH_TOKEN_KEY } from '../../lib/constants'
 import AddIcon from '@mui/icons-material/Add'
 
 import BackButton from '../../components/BackButton'
-import ActionModal from '../../lib/ActionModal'
+import ActionModal from '../../components/ActionModal'
 
 const Leaderboard = ({ user, friends }) => {
   const router = useRouter()
