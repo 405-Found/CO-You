@@ -72,7 +72,6 @@ const Charities = () => {
               paddingTop: '80px',
               textAlign: 'center',
             }}
-            height={140}
             alignItems="flex-end"
           >
             <Typography
@@ -82,7 +81,10 @@ const Charities = () => {
               gutterBottom
               fontSize={30}
             >
-              Top up balance
+              Top up carbon credits
+            </Typography>
+            <Typography color="rgba(255,255,255,0.8)" fontSize={16}>
+              Donate to green charities and earn
             </Typography>
           </Box>
           <Wave
@@ -111,10 +113,16 @@ const Charities = () => {
           <Grid item xs={1}>
             <div className="page-title">
               <div className="page-title">
-                <Box style={{ position: 'absolute', left: '5%' }}>
-                  <BackButton />
-                </Box>
-                <Box>
+                <Box position="relative">
+                  <Box
+                    position="absolute"
+                    left={-40}
+                    top="50%"
+                    sx={{ transform: 'translateY(-50%)' }}
+                    mb={2}
+                  >
+                    <BackButton />
+                  </Box>
                   <form onSubmit={onSearch}>
                     <TextField
                       label="Search Charities"
@@ -133,7 +141,6 @@ const Charities = () => {
                         ),
                       }}
                       fullWidth
-                      sx={{ mb: 2 }}
                     />
                   </form>
                 </Box>

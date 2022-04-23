@@ -204,7 +204,7 @@ const Profile = ({ user, me, tip }) => {
               </Typography>
               <Box sx={{ position: 'relative', mt: 4 }}>
                 <Typography
-                  fontSize={[30, 50]}
+                  fontSize={[30, 30, 50]}
                   sx={{
                     position: 'absolute',
                     top: '50%',
