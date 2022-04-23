@@ -8,6 +8,7 @@ const nextConfig = {
       {
         source: '/',
         destination: '/user',
+        permanent: true,
       },
     ]
   },
