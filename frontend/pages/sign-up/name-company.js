@@ -1,15 +1,14 @@
+import { useRouter } from 'next/router'
 import { Button, Container } from '@mui/material'
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
-import { minWidth } from '@mui/system'
-import Header from '../../components/Header'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 
-import { useRouter } from 'next/router'
+import Header from '../../components/Header'
+
 const signUpNameCompany = () => {
   const router = useRouter()
   return (

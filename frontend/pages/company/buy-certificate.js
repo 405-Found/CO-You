@@ -1,71 +1,21 @@
 import {
   Container,
   List,
-  ListItemButton,
   ListItemText,
-  Icon,
-  ListItemIcon,
   Typography,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
   ListItem,
-  Divider,
   ListItemAvatar,
   Avatar,
   Grid,
-  Card,
-  CardContent,
-  Stack,
 } from '@mui/material'
-
-import Input from '@mui/material/Input'
-import InputAdornment from '@mui/material/InputAdornment'
-import TextField from '@mui/material/TextField'
-
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
-import Header from '../../components/Header'
-import { CHARITIES } from '../../lib/constants'
-import AddIcon from '@mui/icons-material/Add'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import EnergySavingsLeafOutlinedIcon from '@mui/icons-material/EnergySavingsLeafOutlined'
+import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined'
 
 import BackButton from '../../components/BackButton'
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
-import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined'
-import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined'
-const TODAYS_ACTIVITIES = [
-  {
-    type: 'CAR',
-    subtype: 'diesel',
-    distance: 50,
-    time: '14:02 to 16:01',
-    credits: -1,
-  },
-  {
-    type: 'PLANE',
-    distance: 1000,
-    time: '07:03 to 09:04',
-    credits: -10,
-    from: 'MEL',
-    to: 'LAX',
-  },
-]
-
-const TYPE_TO_VERB = {
-  CAR: 'Drive',
-  PLANE: 'Fly',
-}
 
 const BuyCredit = () => {
-  const router = useRouter()
   return (
     <>
       <Box
