@@ -40,7 +40,7 @@ const Profile = ({ user, me, tip }) => {
       pct: data[1].percentage,
     }))
     .filter(({ pct }) => pct > 0.01)
-  const totalCo2 = pieData.reduce((acc, { value }) => acc + value, 0).toFixed(0)
+  const totalCo2 = pieData.reduce((acc, { value }) => acc + value, 0).toFixed(2)
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -204,7 +204,8 @@ const Profile = ({ user, me, tip }) => {
               </Typography>
               <Box sx={{ position: 'relative', mt: 4 }}>
                 <Typography
-                  fontSize={[30, 50]}
+                  fontSize={'20px'}
+                  fontWeight={'700'}
                   sx={{
                     position: 'absolute',
                     top: '50%',

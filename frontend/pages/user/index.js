@@ -43,7 +43,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import AssessmentIcon from '@mui/icons-material/Assessment'
-
+import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf'
 const TYPE_TO_VERB = {
   Motorbike: 'Ride',
   Bus: 'Ride',
@@ -292,7 +292,7 @@ const Index = ({ user, activities }) => {
                         style={{}}
                       >
                         <Grid item xs={6}>
-                          <AccessTimeIcon
+                          <EnergySavingsLeafIcon
                             sx={{ fontSize: 35, color: '#fbc02d' }}
                           />
                         </Grid>
