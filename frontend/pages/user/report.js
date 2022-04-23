@@ -21,6 +21,7 @@ import {
   CardContent,
   Stack,
 } from '@mui/material'
+import axios from 'axios'
 
 import Input from '@mui/material/Input'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -30,7 +31,7 @@ import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
 import Wave from 'react-wavify'
 import Header from '../../components/Header'
-import { CHARITIES } from '../../lib/constants'
+import { AUTH_TOKEN_KEY, CHARITIES } from '../../lib/constants'
 import AddIcon from '@mui/icons-material/Add'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
@@ -64,7 +65,7 @@ const TYPE_TO_VERB = {
   PLANE: 'Fly',
 }
 
-const dailyReport = () => {
+const dailyReport = ({ user }) => {
   const router = useRouter()
   return (
     <>
@@ -105,7 +106,7 @@ const dailyReport = () => {
                   lineHeight: 1,
                 }}
               >
-                12.8 kg
+                {user?.todayGoal?.curStatus}kg
               </Typography>
               <Typography color="#FFF" variant="h6" fontSize={18}>
                 CO2 emissions so far today!
@@ -142,7 +143,7 @@ const dailyReport = () => {
                   <Box style={{ position: 'absolute', left: '5%' }}>
                     <BackButton />
                   </Box>
-                  <Box>These companies bought your emission savings</Box>
+                  <Box>These companies bought your emissions</Box>
                 </div>
               </div>
             </Grid>
@@ -199,4 +200,24 @@ const DonationHistoryItem = (props) => {
     </ListItem>
   )
 }
+export async function getServerSideProps(context) {
+  const { cookies } = context.req
+  const token = cookies && cookies[AUTH_TOKEN_KEY]
+  if (token) {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/userToken?token=${token}`
+    )
+    return {
+      props: {
+        user: res.data || null,
+      },
+    }
+  }
+  return {
+    props: {
+      user: null,
+    },
+  }
+}
+
 export default dailyReport

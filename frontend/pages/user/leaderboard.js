@@ -37,7 +37,7 @@ import ActionModal from '../../lib/ActionModal'
 
 const Leaderboard = ({ user, friends }) => {
   const router = useRouter()
-  if (!user) router.push('/')
+  // if (!user) router.push('/')
   const [addFriendModalOpen, setAddFriendModalOpen] = useState(false)
   const [friendEmail, setFriendEmail] = useState('')
   const [err, setErr] = useState('')

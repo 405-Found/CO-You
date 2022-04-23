@@ -24,13 +24,14 @@ export default function Header({
     >
       <Toolbar>
         {showBackButton ? <BackButton /> : null}
-        <Typography
+        {/* <Typography
           fontSize="20px"
           fontWeight={700}
           sx={{ ...(isTransparent && { color: '#FFF' }) }}
         >
           Carbon.IO
-        </Typography>
+        </Typography> */}
+        <img src="/COYou.svg" alt="COYou" style={{ height: '50px' }} />
         <Box
           sx={{
             flexGrow: 1,

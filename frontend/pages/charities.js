@@ -208,11 +208,13 @@ const Charities = () => {
                       <Typography>
                         You will receieve{' '}
                         <Typography variant="monospace">
-                          {(parseFloat(donateAmt[name]) / moneyPerKilo).toFixed(
-                            2
-                          )}
+                          <strong>
+                            {(
+                              parseFloat(1000 * donateAmt[name]) / moneyPerKilo
+                            ).toFixed(1)}
+                          </strong>
                         </Typography>{' '}
-                        CO2 credits
+                        carbon credits
                       </Typography>
                     </CardActions>
                   ) : null}
