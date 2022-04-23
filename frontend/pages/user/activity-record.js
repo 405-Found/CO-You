@@ -112,7 +112,7 @@ const activityRecord = ({ type }) => {
                     <EnergySavingsLeafIcon />
                   </Grid>
                   <Grid item xs={6.5}>
-                    Estimated carbon (kg)
+                    Estimated emissions (kg)
                   </Grid>
                   <Grid item xs={2.5} style={{ textAlign: 'right' }}>
                     {secsToCO2(secs).toFixed(2)}

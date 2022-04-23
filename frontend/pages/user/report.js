@@ -170,7 +170,7 @@ const dailyReport = ({ user }) => {
             <Grid item sx={1}>
               <Button
                 className="btn btn-primary"
-                onClick={() => router.push('/user/report')}
+                onClick={() => router.push('/profile?email=bigsoupz@gmail.zzz')}
               >
                 Analyse my activities
               </Button>
