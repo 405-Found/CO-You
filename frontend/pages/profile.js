@@ -13,15 +13,15 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import axios from 'axios'
-import useAuth from '../lib/useAuth'
 import { Box } from '@mui/system'
+
+import useAuth from '../lib/useAuth'
 import Wave from 'react-wavify'
 import { PieChart } from 'react-minimal-pie-chart'
-import stc from 'string-to-color'
 import typeToColor from '../lib/typeToColor'
 import { AUTH_TOKEN_KEY } from '../lib/constants'
-
 import Header from '../components/Header'
+
 const Profile = ({ user, me, tip }) => {
   const isUserMe = user.userID === me.userID
   const router = useRouter()

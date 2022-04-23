@@ -11,10 +11,10 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { Box } from '@mui/system'
 
 import Header from '../components/Header'
 import { DEFAULT_GOAL_PCT } from '../lib/constants'
-import { Box } from '@mui/system'
 import { getToken } from '../lib/useAuth'
 import carbon2trees from '../lib/carbon2trees'
 

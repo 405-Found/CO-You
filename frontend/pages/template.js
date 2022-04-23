@@ -1,4 +1,5 @@
 import { Button, Container } from '@mui/material'
+
 import Header from '../components/Header'
 
 const Template = () => (

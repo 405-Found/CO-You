@@ -1,23 +1,10 @@
 import { Button, Container, Icon } from '@mui/material'
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
-import Divider from '@mui/material/Divider'
-import { minWidth } from '@mui/system'
 import Header from '../../components/Header'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import Pause from '@mui/icons-material/Pause'
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf'
-import FlightIcon from '@mui/icons-material/Flight'
-import DoneIcon from '@mui/icons-material/Done'
-import StopIcon from '@mui/icons-material/Stop'
 import { useEffect, useState } from 'react'
-import moment from 'moment'
-import { clearInterval } from 'timers'
 import axios from 'axios'
 import typeToIcon from '../../lib/typeToIcon'
 import typeToEmissionLevel from '../../lib/typeToEmissionLevel'
@@ -68,7 +55,7 @@ const activityRecord = ({ type }) => {
 
   return (
     <Box className="app-frame" style={{ backgroundColor: '#4caf50' }}>
-      <Header isTransparent />
+      <Header />
       <Container
         className="app-container"
         style={{ backgroundColor: '#4caf50' }}

@@ -9,9 +9,10 @@ import {
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
+import ParkIcon from '@mui/icons-material/Park'
+
 import Header from '../components/Header'
 import carbon2trees from '../lib/carbon2trees'
-import ParkIcon from '@mui/icons-material/Park'
 
 const CarbonEstimate = ({ estimate }) => {
   const router = useRouter()
