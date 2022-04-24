@@ -3,7 +3,7 @@ Codebrew 2022 Track winner for Carbon and Energy <br>
 **Devpost:** https://devpost.com/software/coyou-imotzp
 ## Tech Stack:<br>
 **Frontend:** <br>
-**Web:** React.js Next.js(Kevin and Ben) <br>
+**Web:** React.js Next.js(Kevin&Ben) <br>
 **Mobile:** React Native(Kevin) <br>
 **Backend:**<br>
 Leaderboard function: Redis (Haining)<br>
