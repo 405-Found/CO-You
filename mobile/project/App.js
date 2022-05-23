@@ -4,8 +4,23 @@ import React, { Component } from 'react'
 import { SafeAreaView } from 'react-native'
 import { WebView } from 'react-native-webview'
 
+import CompanyPage from './screens/company'
+import UserPage from './screens/user'
+import SignupPage from './screens/sign-up'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+const Stack = createNativeStackNavigator()
 export default function App() {
-  return <MyWeb />
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="SignupPage">
+        <Stack.Screen name="CompanyPage" component={CompanyPage} />
+        <Stack.Screen name="UserPage" component={UserPage} />
+        <Stack.Screen name="SignupPage" component={SignupPage} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -15,17 +30,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  CarbonIO: {
-    height: '100%',
-    width: '100%',
-  },
 })
-
-const MyWeb = () => {
-  return (
-    <WebView
-      source={{ uri: 'https://infinite.red' }}
-      style={{ marginTop: 20 }}
-    />
-  )
-}
