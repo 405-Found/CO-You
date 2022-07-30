@@ -1,4 +1,4 @@
-# CO-You (Codebrew Hackathon 2022 Track Winner)
+# CO-You (Codebrew 2022 Hackathon Track Winner)
 An energy saving app we built in 48 hours <br>
 **Devpost:** https://devpost.com/software/coyou-imotzp
 ## Tech Stack:<br>
